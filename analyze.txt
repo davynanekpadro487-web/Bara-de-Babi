@@ -1,0 +1,42 @@
+﻿Analyzing bara_2_babi...                                        
+
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:465:25 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:470:27 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:482:32 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:488:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:524:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:603:34 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:783:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:889:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:979:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1016:34 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1064:40 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1169:25 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1173:41 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1180:41 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1281:34 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1333:40 - undefined_getter
+  error - Invalid constant value - lib\screens\artisan_dashboard_screen.dart:1345:32 - invalid_constant
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1345:42 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1482:41 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1490:45 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1574:46 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1749:27 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1753:43 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1766:37 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1821:40 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1859:25 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1863:41 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:1875:45 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:2030:27 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:2035:29 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\artisan_dashboard_screen.dart:2050:39 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\auth_screen.dart:125:35 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\chat_detail_screen.dart:158:36 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\chat_detail_screen.dart:282:33 - undefined_getter
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\chat_detail_screen.dart:292:35 - undefined_getter
+  error - Invalid constant value - lib\screens\chat_detail_screen.dart:323:34 - invalid_constant
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\chat_detail_screen.dart:323:44 - undefined_getter
+   info - 'activeColor' is deprecated and shouldn't be used. Use activeThumbColor instead. This feature was deprecated after v3.31.0-2.0.pre - lib\screens\settings_screens.dart:262:33 - deprecated_member_use
+  error - The getter 'neonBlueLight' isn't defined for the type 'AppColors' - lib\screens\settings_screens.dart:454:32 - undefined_getter
+
