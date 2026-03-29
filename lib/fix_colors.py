@@ -3,8 +3,21 @@ import os
 lib_dir = "d:/B2B/bara_2_babi/lib"
 
 replacements = {
-    "AppColors.neonBlueLight": "AppColors.neonPurple",
-    "AppColors.neonBlueDark": "AppColors.neonBlueDark" # wait, did it become neonBlueDark? Yes, "AppColors.gold" became "AppColors.neonBlue" -> neonBlueDark
+    "AppColors.neonBlue": "AppColors.primary",
+    "AppColors.neonOrange": "AppColors.primary",
+    "AppColors.neonPurple": "AppColors.primary",
+    "AppColors.neonPink": "AppColors.primary",
+    "AppColors.neonBlueDark": "AppColors.primaryDark",
+    "AppColors.neonBlueGradient": "AppColors.primaryGradient",
+    "AppColors.neonWarmGradient": "AppColors.primaryGradient",
+    "AppColors.backgroundTertiary": "AppColors.backgroundSecondary",
+    "AppColors.textOnNeon": "AppColors.textOnPrimary",
+    "AppColors.glassBorder": "AppColors.borderColor",
+    "AppColors.ivoryGreen": "AppColors.success",
+    "AppColors.ivoryOrange": "AppColors.warning",
+    "AppColors.ivoryWhite": "AppColors.backgroundPrimary",
+    "AppColors.backgroundElevated": "AppColors.backgroundCard",
+    "AppTheme.darkTheme": "AppTheme.lightTheme"
 }
 
 def replace_in_file(filepath):

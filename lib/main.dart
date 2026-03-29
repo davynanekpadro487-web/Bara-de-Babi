@@ -22,9 +22,9 @@ class BaraDeBabiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Barra de Babi',
+      title: 'Bara de Babi',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       home: const SplashScreen(),
     );
   }

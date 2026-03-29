@@ -1,10 +1,13 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/cards.dart';
 import '../widgets/buttons.dart';
+import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 
-/// Artisan Directory — Search + Filters with Warm Theme
+/// Prestataire Directory — Search + Filters with Warm Theme
 class ArtisanDirectoryScreen extends StatefulWidget {
   const ArtisanDirectoryScreen({super.key});
 
@@ -144,380 +147,353 @@ class _ArtisanDirectoryScreenState extends State<ArtisanDirectoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final artisans = _filteredArtisans;
+    final prestataires = _filteredArtisans;
 
-    return Container(
-      decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
-      child: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // Header
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'ANNUAIRE',
-                      style: GoogleFonts.outfit(
-                        color: AppColors.neonBlue,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 4,
-                      ),
+    return SafeArea(
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          // Header
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'RÉPERTOIRE',
+                    style: GoogleFonts.outfit(
+                      color: AppColors.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 2,
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Nos Artisans',
-                      style: GoogleFonts.outfit(
-                        color: AppColors.textPrimary,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                      ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Prestataires Experts',
+                    style: GoogleFonts.outfit(
+                      color: AppColors.textPrimary,
+                      fontSize: 34,
+                      fontWeight: FontWeight.w900,
                     ),
-                    const SizedBox(height: 24),
-                    // Search bar
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 15,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (v) => setState(() => _searchQuery = v),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Rechercher un artisan...',
-                          prefixIcon: const Icon(
-                            Icons.search_rounded,
-                            color: AppColors.neonBlue,
-                            size: 24,
-                          ),
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                          suffixIcon: _searchQuery.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.close_rounded,
-                                    color: AppColors.textTertiary,
-                                    size: 20,
-                                  ),
-                                  onPressed: () {
-                                    _searchController.clear();
-                                    setState(() => _searchQuery = '');
-                                  },
-                                )
-                              : null,
-                        ),
-                      ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Search Bar Glass
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: GlassContainer(
+                height: 64,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                borderRadius: 100,
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (v) => setState(() => _searchQuery = v),
+                  textAlignVertical: TextAlignVertical.center,
+                  style: GoogleFonts.inter(
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Rechercher un prestataire...',
+                    hintStyle: GoogleFonts.inter(
+                      color: AppColors.textTertiary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    prefixIcon: const Icon(
+                      Icons.search_rounded,
+                      color: AppColors.primary,
+                      size: 26,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                  ),
                 ),
               ),
             ),
+          ),
 
-            // Category filters
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 70,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    final cat = _categories[index];
-                    final isSelected = cat['id'] == _selectedCategory;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: GestureDetector(
-                        onTap: () =>
-                            setState(() => _selectedCategory = cat['id']!),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 250),
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.neonBlue.withValues(alpha: 0.1)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: isSelected
-                                  ? AppColors.neonBlue
-                                  : AppColors.backgroundTertiary,
-                              width: isSelected ? 2 : 1,
-                            ),
-                          ),
+          // Category filter chips
+          SliverToBoxAdapter(
+            child: Container(
+              height: 50,
+              margin: const EdgeInsets.only(top: 24),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                itemCount: _categories.length,
+                itemBuilder: (context, index) {
+                  final cat = _categories[index];
+                  final isSelected = cat['id'] == _selectedCategory;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: GestureDetector(
+                      onTap: () => setState(() => _selectedCategory = cat['id']!),
+                      child: GlassContainer(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        borderRadius: 100,
+                        gradient: isSelected ? AppColors.primaryGradient : null,
+                        child: Center(
                           child: Row(
                             children: [
                               Text(cat['icon']!, style: const TextStyle(fontSize: 16)),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 8),
                               Text(
                                 cat['label']!,
-                                style: GoogleFonts.outfit(
-                                  color: isSelected
-                                      ? AppColors.neonBlue
-                                      : AppColors.textSecondary,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 1.2,
+                                style: GoogleFonts.inter(
+                                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                                  fontSize: 13,
+                                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ),
-
-            // Results count
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-                child: Text(
-                  '${artisans.length} artisan${artisans.length > 1 ? 's' : ''} trouvé${artisans.length > 1 ? 's' : ''}',
-                  style: GoogleFonts.inter(
-                    color: AppColors.textTertiary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-
-            // Artisans list
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final a = artisans[index];
-                  return ArtisanCard(
-                    name: a['name'] as String,
-                    specialty: a['specialty'] as String,
-                    rating: (a['rating'] as num).toDouble(),
-                    missions: a['missions'] as int,
-                    isAvailable: a['available'] as bool,
-                    onTap: () => _showArtisanDetail(context, a),
+                    ),
                   );
-                }, childCount: artisans.length),
+                },
               ),
             ),
+          ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: 32)),
-          ],
-        ),
+          // Results count
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+              child: Text(
+                '${prestataires.length} experts à proximité',
+                style: GoogleFonts.outfit(
+                  color: AppColors.textSecondary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ),
+
+          // Prestataires list
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final a = prestataires[index];
+                return ArtisanCard(
+                  name: a['name'] as String,
+                  specialty: a['specialty'] as String,
+                  rating: (a['rating'] as num).toDouble(),
+                  missions: a['missions'] as int,
+                  isAvailable: a['available'] as bool,
+                  onTap: () => _showArtisanDetail(context, a),
+                );
+              }, childCount: prestataires.length),
+            ),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+        ],
       ),
     );
   }
 
-  void _showArtisanDetail(BuildContext context, Map<String, dynamic> artisan) {
+  void _showArtisanDetail(BuildContext context, Map<String, dynamic> prestataire) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => _ArtisanDetailSheet(artisan: artisan),
+      builder: (_) => _ArtisanDetailSheet(prestataire: prestataire),
     );
   }
 }
 
 class _ArtisanDetailSheet extends StatelessWidget {
-  final Map<String, dynamic> artisan;
-  const _ArtisanDetailSheet({required this.artisan});
+  final Map<String, dynamic> prestataire;
+  const _ArtisanDetailSheet({required this.prestataire});
 
   @override
   Widget build(BuildContext context) {
-    final name = artisan['name'] as String;
-    final specialty = artisan['specialty'] as String;
-    final rating = (artisan['rating'] as num).toDouble();
-    final missions = artisan['missions'] as int;
-    final available = artisan['available'] as bool;
+    final name = prestataire['name'] as String;
+    final specialty = prestataire['specialty'] as String;
+    final rating = (prestataire['rating'] as num).toDouble();
+    final missions = prestataire['missions'] as int;
+    final available = prestataire['available'] as bool;
 
     return DraggableScrollableSheet(
       initialChildSize: 0.75,
       maxChildSize: 0.95,
       minChildSize: 0.5,
       expand: false,
-      builder: (_, scrollController) => Container(
-        decoration: const BoxDecoration(
-          color: AppColors.backgroundPrimary,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-        ),
-        child: SingleChildScrollView(
-          controller: scrollController,
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            children: [
-              Container(
-                width: 50,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundTertiary,
-                  borderRadius: BorderRadius.circular(2.5),
-                ),
-              ),
-              const SizedBox(height: 32),
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: AppColors.neonBlueGradient,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.neonBlue.withValues(alpha: 0.2),
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    name[0],
-                    style: GoogleFonts.outfit(
-                      color: Colors.white,
-                      fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                    ),
+      builder: (_, scrollController) => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
+        child: PremiumBackground(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              children: [
+                Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundSecondary,
+                    borderRadius: BorderRadius.circular(2.5),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                name,
-                style: GoogleFonts.outfit(
-                  color: AppColors.textPrimary,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                specialty.toUpperCase(),
-                style: GoogleFonts.outfit(
-                  color: AppColors.neonBlue,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: available
-                      ? AppColors.success.withValues(alpha: 0.1)
-                      : AppColors.error.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  available ? '● DISPONIBLE' : '● OCCUPÉ',
-                  style: GoogleFonts.outfit(
-                    color: available ? AppColors.success : AppColors.error,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1,
+                const SizedBox(height: 32),
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: AppColors.primaryGradient,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.2),
+                        blurRadius: 20,
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              const SizedBox(height: 32),
-              Row(
-                children: [
-                  Expanded(
-                    child: _DetailStat(
-                      label: 'NOTE',
-                      value: rating.toStringAsFixed(1),
-                      icon: Icons.star_rounded,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _DetailStat(
-                      label: 'MISSIONS',
-                      value: '$missions',
-                      icon: Icons.work_outline_rounded,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _DetailStat(
-                      label: 'SUCCÈS',
-                      value: '98%',
-                      icon: Icons.verified_rounded,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.backgroundTertiary),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'À PROPOS',
+                  child: Center(
+                    child: Text(
+                      name[0],
                       style: GoogleFonts.outfit(
-                        color: AppColors.textTertiary,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 2,
+                        color: Colors.white,
+                        fontSize: 48,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Artisan certifié avec une expertise de 10 ans. Spécialisé en installations neuves et rénovations complexes. Intervention ultra-rapide sur Abidjan.',
-                      style: GoogleFonts.inter(
-                        color: AppColors.textSecondary,
-                        fontSize: 15,
-                        height: 1.6,
-                        fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  name,
+                  style: GoogleFonts.outfit(
+                    color: AppColors.textPrimary,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  specialty.toUpperCase(),
+                  style: GoogleFonts.outfit(
+                    color: AppColors.primary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                GlassContainer(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  borderRadius: 12,
+                  blur: 10,
+                  gradient: LinearGradient(
+                    colors: [
+                      (available ? AppColors.success : AppColors.error).withValues(alpha: 0.2),
+                      (available ? AppColors.success : AppColors.error).withValues(alpha: 0.1),
+                    ],
+                  ),
+                  child: Text(
+                    available ? '● DISPONIBLE' : '● OCCUPÉ',
+                    style: GoogleFonts.outfit(
+                      color: available ? AppColors.success : AppColors.error,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _DetailStat(
+                        label: 'NOTE',
+                        value: rating.toStringAsFixed(1),
+                        icon: Icons.star_rounded,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _DetailStat(
+                        label: 'MISSIONS',
+                        value: '$missions',
+                        icon: Icons.work_outline_rounded,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _DetailStat(
+                        label: 'SUCCÈS',
+                        value: '98%',
+                        icon: Icons.verified_rounded,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 40),
-              Row(
-                children: [
-                  Expanded(
-                    child: GhostButton(
-                      label: 'MESSAGES',
-                      icon: Icons.chat_bubble_outline_rounded,
-                      onPressed: () {},
-                    ),
+                const SizedBox(height: 32),
+                GlassContainer(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(24),
+                  borderRadius: 24,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'À PROPOS',
+                        style: GoogleFonts.outfit(
+                          color: AppColors.textTertiary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Prestataire certifié avec une expertise de 10 ans. Spécialisé en installations neuves et rénovations complexes. Intervention ultra-rapide sur Abidjan.',
+                        style: GoogleFonts.inter(
+                          color: AppColors.textSecondary,
+                          fontSize: 15,
+                          height: 1.6,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: GoldButton(
-                      label: 'DEMANDER',
-                      onPressed: () {},
-                      showArrow: false,
+                ),
+                const SizedBox(height: 40),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GhostButton(
+                        label: 'MESSAGES',
+                        icon: Icons.chat_bubble_outline_rounded,
+                        onPressed: () {},
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-            ],
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: PrimaryButton(
+                        label: 'DEMANDER',
+                        onPressed: () {},
+                        showArrow: false,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
@@ -537,16 +513,12 @@ class _DetailStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GlassContainer(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.backgroundTertiary),
-      ),
+      borderRadius: 24,
       child: Column(
         children: [
-          Icon(icon, color: AppColors.neonBlue, size: 24),
+          Icon(icon, color: AppColors.primary, size: 24),
           const SizedBox(height: 10),
           Text(
             value,

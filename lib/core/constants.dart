@@ -3,10 +3,10 @@ class AppConstants {
   AppConstants._();
 
   // ─── App Info ─────────────────────────────────────
-  static const String appName = 'BARRA DE BABI';
+  static const String appName = 'BARA DE BABI';
   static const String appTagline = 'Lève-toi et va, brobro';
   static const String appDescription =
-      'Plateforme de mise en relation Artisans-Clients à Abidjan';
+      'Plateforme de mise en relation Prestataires-Clients à Abidjan';
   static const String appVersion = '2.0.0';
 
   // ─── API ──────────────────────────────────────────
@@ -16,107 +16,67 @@ class AppConstants {
   static const List<Map<String, dynamic>> serviceCategories = [
     {
       'id': 'plomberie',
-      'name': 'PLOMBERIE',
+      'name': 'Plomberie',
       'icon': '🔧',
+      'colorName': 'blue',
       'description': 'Réparations, installations sanitaires',
-      'subProblems': [
-        'Fuite de robinet',
-        'Toilette bouchée',
-        'Chauffe-eau en panne',
-        'Installation sanitaire',
-        'Canalisation bouchée',
-      ],
+      'subProblems': ['Fuite de robinet', 'Toilette bouchée', 'Chauffe-eau en panne'],
     },
     {
       'id': 'electricite',
-      'name': 'ÉLECTRICITÉ',
+      'name': 'Électricité',
       'icon': '⚡',
+      'colorName': 'yellow',
       'description': 'Installations, dépannage électrique',
-      'subProblems': [
-        'Panne de courant',
-        'Installation prise/interrupteur',
-        'Câblage maison',
-        'Tableau électrique',
-        'Éclairage extérieur',
-      ],
+      'subProblems': ['Panne de courant', 'Installation prise', 'Câblage'],
     },
     {
       'id': 'menuiserie',
-      'name': 'MENUISERIE',
+      'name': 'Menuiserie',
       'icon': '🪚',
+      'colorName': 'orange',
       'description': 'Meubles, portes, aménagements bois',
-      'subProblems': [
-        'Porte cassée',
-        'Meuble sur mesure',
-        'Placard encastré',
-        'Terrasse en bois',
-        'Réparation mobilier',
-      ],
+      'subProblems': ['Porte cassée', 'Meuble sur mesure', 'Placard'],
     },
     {
       'id': 'couture',
-      'name': 'COUTURE',
+      'name': 'Couture',
       'icon': '🧵',
+      'colorName': 'pink',
       'description': 'Confection, retouches vestimentaires',
-      'subProblems': [
-        'Confection tenue',
-        'Retouche vêtement',
-        'Rideaux sur mesure',
-        'Uniforme scolaire',
-        'Tenue traditionnelle',
-      ],
+      'subProblems': ['Confection tenue', 'Retouche vêtement', 'Rideaux'],
     },
     {
       'id': 'mecanique',
-      'name': 'MÉCANIQUE',
+      'name': 'Mécanique',
       'icon': '🔩',
+      'colorName': 'purple',
       'description': 'Réparation, entretien automobile',
-      'subProblems': [
-        'Réparation moteur',
-        'Vidange',
-        'Diagnostic auto',
-        'Freins',
-        'Climatisation auto',
-      ],
+      'subProblems': ['Réparation moteur', 'Vidange', 'Diagnostic auto'],
     },
     {
       'id': 'coiffure',
-      'name': 'COIFFURE',
+      'name': 'Coiffure',
       'icon': '💇',
+      'colorName': 'green',
       'description': 'Coiffure homme et femme à domicile',
-      'subProblems': [
-        'Coupe homme',
-        'Tresses',
-        'Tissage',
-        'Coloration',
-        'Coiffure mariage',
-      ],
+      'subProblems': ['Coupe homme', 'Tresses', 'Tissage'],
     },
     {
       'id': 'peinture',
-      'name': 'PEINTURE',
+      'name': 'Peinture',
       'icon': '🎨',
+      'colorName': 'blue',
       'description': 'Peinture intérieure et extérieure',
-      'subProblems': [
-        'Peinture chambre',
-        'Peinture façade',
-        'Peinture décorative',
-        'Ravalement',
-        'Étanchéité',
-      ],
+      'subProblems': ['Peinture chambre', 'Peinture façade', 'Peinture décorative'],
     },
     {
       'id': 'maconnerie',
-      'name': 'MAÇONNERIE',
+      'name': 'Maçonnerie',
       'icon': '🧱',
+      'colorName': 'orange',
       'description': 'Construction, réparation bâtiment',
-      'subProblems': [
-        'Mur fissuré',
-        'Carrelage',
-        'Dalles',
-        'Clôture',
-        'Extensions',
-      ],
+      'subProblems': ['Mur fissuré', 'Carrelage', 'Dalles'],
     },
   ];
 }

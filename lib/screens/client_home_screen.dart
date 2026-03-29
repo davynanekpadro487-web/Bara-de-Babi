@@ -1,11 +1,12 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../core/constants.dart';
 import '../widgets/cards.dart';
-import '../widgets/buttons.dart';
+import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 import 'artisan_directory_screen.dart';
-import 'mission_screens.dart';
 import 'service_request_screen.dart';
 import 'chat_list_screen.dart';
 import 'profile_screen.dart';
@@ -21,12 +22,13 @@ class ClientHomeScreen extends StatefulWidget {
 
 class _ClientHomeScreenState extends State<ClientHomeScreen> {
   int _currentIndex = 0;
-
-  late final List<Widget> _screens;
+  late List<Widget> _screens;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: 0);
     _screens = [
       const _HomeContent(),
       const ArtisanDirectoryScreen(),
@@ -36,58 +38,75 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onNavTap(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
-      body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: _buildBottomNav(),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
+        child: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              onPageChanged: (index) => setState(() => _currentIndex = index),
+              physics: const BouncingScrollPhysics(),
+              children: _screens,
+            ),
+            _buildBottomNav(),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _NavItem(
-                icon: Icons.home_rounded,
-                label: 'ACCUEIL',
-                isSelected: _currentIndex == 0,
-                onTap: () => setState(() => _currentIndex = 0),
-              ),
-              _NavItem(
-                icon: Icons.search_rounded,
-                label: 'ARTISANS',
-                isSelected: _currentIndex == 1,
-                onTap: () => setState(() => _currentIndex = 1),
-              ),
-              _NavItem(
-                icon: Icons.chat_bubble_outline_rounded,
-                label: 'MESSAGES',
-                isSelected: _currentIndex == 2,
-                onTap: () => setState(() => _currentIndex = 2),
-              ),
-              _NavItem(
-                icon: Icons.person_outline_rounded,
-                label: 'PROFIL',
-                isSelected: _currentIndex == 3,
-                onTap: () => setState(() => _currentIndex = 3),
-              ),
-            ],
-          ),
+    return Positioned(
+      bottom: 24,
+      left: 24,
+      right: 24,
+      child: GlassContainer(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        borderRadius: 32,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _NavItem(
+              icon: Icons.home_rounded,
+              label: 'Accueil',
+              isSelected: _currentIndex == 0,
+              onTap: () => _onNavTap(0),
+            ),
+            _NavItem(
+              icon: Icons.search_rounded,
+              label: 'Prestataires',
+              isSelected: _currentIndex == 1,
+              onTap: () => _onNavTap(1),
+            ),
+            _NavItem(
+              icon: Icons.chat_bubble_outline_rounded,
+              label: 'Messages',
+              isSelected: _currentIndex == 2,
+              onTap: () => _onNavTap(2),
+            ),
+            _NavItem(
+              icon: Icons.person_outline_rounded,
+              label: 'Profil',
+              isSelected: _currentIndex == 3,
+              onTap: () => _onNavTap(3),
+            ),
+          ],
         ),
       ),
     );
@@ -113,37 +132,37 @@ class _NavItem extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? AppColors.neonBlue.withValues(alpha: 0.1)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(14),
+                color: isSelected ? AppColors.primary : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: isSelected ? [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ] : null,
               ),
               child: Icon(
                 icon,
                 size: 24,
-                color: isSelected
-                    ? AppColors.neonBlue
-                    : AppColors.textTertiary,
+                color: isSelected ? Colors.white : AppColors.textTertiary,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: GoogleFonts.outfit(
-                color: isSelected
-                    ? AppColors.neonBlue
-                    : AppColors.textTertiary,
-                fontSize: 9,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1,
+                color: isSelected ? AppColors.primary : AppColors.textTertiary,
+                fontSize: 10,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
               ),
             ),
           ],
@@ -159,224 +178,232 @@ class _HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(child: _HeroSection()),
-        SliverToBoxAdapter(child: _ExpressRequestSection()),
+        SliverToBoxAdapter(child: _HeaderSection()),
+        SliverToBoxAdapter(child: _SearchBarSection()),
+        SliverToBoxAdapter(child: _PromoBannerSection()),
         SliverToBoxAdapter(child: _CategoriesSection()),
         SliverToBoxAdapter(child: _PopularArtisansSection()),
-        SliverToBoxAdapter(child: _HowItWorksSection()),
-        const SliverToBoxAdapter(child: SizedBox(height: 40)),
+        const SliverPadding(padding: EdgeInsets.only(bottom: 120)),
       ],
     );
   }
 }
 
-class _HeroSection extends StatelessWidget {
+class _HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 32),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.neonBlue.withValues(alpha: 0.1),
-            AppColors.backgroundPrimary,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      padding: const EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 20),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: AppColors.neonBlueGradient,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'B',
-                            style: GoogleFonts.outfit(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2), width: 2),
+                      ),
+                      child: CircleAvatar(
+                        radius: 24,
+                        backgroundColor: AppColors.pastelMint,
+                        child: const Text('👋', style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Salut 👋',
+                          style: GoogleFonts.outfit(
+                            color: AppColors.textSecondary,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        AppConstants.appName,
-                        style: GoogleFonts.outfit(
-                          color: AppColors.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 10,
+                        Text(
+                          'Abidjan, CIV',
+                          style: GoogleFonts.outfit(
+                            color: AppColors.textPrimary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.notifications_none_rounded,
-                      color: AppColors.textPrimary,
-                      size: 24,
+                  ],
+                ),
+                GlassContainer(
+                  padding: const EdgeInsets.all(12),
+                  borderRadius: 100,
+                  child: const Icon(
+                    Icons.notifications_none_rounded,
+                    color: AppColors.textPrimary,
+                    size: 24,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            RichText(
+              text: TextSpan(
+                style: GoogleFonts.outfit(
+                  color: AppColors.textPrimary,
+                  fontSize: 34,
+                  fontWeight: FontWeight.w400,
+                  height: 1.1,
+                ),
+                children: [
+                  const TextSpan(text: 'Trouvez vos\n'),
+                  TextSpan(
+                    text: 'services à domicile',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w900,
+                      shadows: [
+                        Shadow(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 48),
-              Text(
-                'ABIDJAN',
-                style: GoogleFonts.outfit(
-                  color: AppColors.neonBlue,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 6,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'TROUVEZ\nVOTRE ARTISAN\nEN 2 MINUTES',
-                style: GoogleFonts.outfit(
-                  color: AppColors.textPrimary,
-                  fontSize: 38,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1,
-                  height: 1.1,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                width: 60,
-                height: 4,
-                decoration: BoxDecoration(
-                  gradient: AppColors.neonWarmGradient,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Artisans vérifiés • Proches de vous • Disponibles',
-                style: GoogleFonts.inter(
-                  color: AppColors.textSecondary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 32),
-              GhostButton(
-                label: 'VOIR MA MISSION EN COURS',
-                icon: Icons.track_changes_rounded,
-                isFullWidth: true,
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ClientMissionScreen()),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _ExpressRequestSection extends StatelessWidget {
+class _SearchBarSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const ServiceRequestScreen()),
-          );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(22),
-          decoration: BoxDecoration(
-            gradient: AppColors.neonWarmGradient,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.neonBlue.withValues(alpha: 0.25),
-                blurRadius: 25,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.flash_on_rounded,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'DEMANDE EXPRESS',
-                      style: GoogleFonts.outfit(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2,
-                      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: GlassContainer(
+              height: 58,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              borderRadius: 100,
+              child: Row(
+                children: [
+                  const Icon(Icons.search_rounded, color: AppColors.primary, size: 26),
+                  const SizedBox(width: 14),
+                  Text(
+                    'Rechercher un service...',
+                    style: GoogleFonts.inter(
+                      color: AppColors.textTertiary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.2,
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Besoin d\'un dépannage immédiat ?',
-                      style: GoogleFonts.inter(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-                size: 20,
-              ),
-            ],
+            ),
           ),
-        ),
+          const SizedBox(width: 14),
+          GlassContainer(
+            width: 58,
+            height: 58,
+            borderRadius: 100,
+            gradient: AppColors.primaryGradient,
+            padding: EdgeInsets.zero,
+            child: const Center(
+              child: Icon(Icons.tune_rounded, color: Colors.white, size: 22),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PromoBannerSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.pastelMint,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.pastelMint.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -30,
+            bottom: -30,
+            child: CircleAvatar(
+              radius: 100,
+              backgroundColor: Colors.white.withValues(alpha: 0.3),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.accentLime,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    '-30%',
+                    style: GoogleFonts.outfit(
+                      color: AppColors.textPrimary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Service de Nettoyage\nProfessionnel',
+                  style: GoogleFonts.outfit(
+                    color: AppColors.textPrimary,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Réservez pour la réduction',
+                  style: GoogleFonts.inter(
+                    color: AppColors.textSecondary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -388,65 +415,59 @@ class _CategoriesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 48),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'NOS SERVICES',
-                    style: GoogleFonts.outfit(
-                      color: AppColors.neonBlue,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 4,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Parcourir tout',
-                    style: GoogleFonts.outfit(
-                      color: AppColors.textPrimary,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
+              Text(
+                'Nos Services',
+                style: GoogleFonts.outfit(
+                  color: AppColors.textPrimary,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Text(
-                  'Voir tout',
-                  style: GoogleFonts.outfit(
-                    color: AppColors.neonBlue,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
+              Text(
+                'Tout voir',
+                style: GoogleFonts.outfit(
+                  color: AppColors.primary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 24),
         SizedBox(
-          height: 175,
+          height: 180,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 24),
             itemCount: AppConstants.serviceCategories.length,
             itemBuilder: (context, index) {
               final cat = AppConstants.serviceCategories[index];
+              
+              Color getCategoryColor(String name) {
+                switch (name) {
+                  case 'blue': return AppColors.pastelSkyBlue;
+                  case 'pink': return AppColors.pastelPink;
+                  case 'yellow': return AppColors.pastelPeach;
+                  case 'orange': return AppColors.pastelPeach;
+                  case 'green': return AppColors.pastelMint;
+                  case 'purple': return AppColors.pastelLavender;
+                  default: return AppColors.pastelSkyBlue;
+                }
+              }
+
               return Padding(
-                padding: const EdgeInsets.only(right: 14),
+                padding: const EdgeInsets.only(right: 16),
                 child: CategoryCard(
                   emoji: cat['icon'] as String,
                   title: cat['name'] as String,
                   subtitle: cat['description'] as String,
+                  color: getCategoryColor(cat['colorName'] ?? 'blue'),
+                  isSelected: index == 0,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -482,13 +503,6 @@ class _PopularArtisansSection extends StatelessWidget {
       'missions': 89,
       'available': true,
     },
-    {
-      'name': 'Yao Konan',
-      'specialty': 'Électricien',
-      'rating': 4.7,
-      'missions': 203,
-      'available': false,
-    },
   ];
 
   @override
@@ -499,156 +513,40 @@ class _PopularArtisansSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 24),
-          Text(
-            'TOP ARTISANS',
-            style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 4,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Recommandés',
-            style: GoogleFonts.outfit(
-              color: AppColors.textPrimary,
-              fontSize: 28,
-              fontWeight: FontWeight.w900,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Meilleurs Prestataires',
+                style: GoogleFonts.outfit(
+                  color: AppColors.textPrimary,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              Text(
+                'Tout voir',
+                style: GoogleFonts.outfit(
+                  color: AppColors.primary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           ..._mockArtisans.map(
-            (artisan) => ArtisanCard(
-              name: artisan['name'] as String,
-              specialty: artisan['specialty'] as String,
-              rating: (artisan['rating'] as num).toDouble(),
-              missions: artisan['missions'] as int,
-              isAvailable: artisan['available'] as bool,
+            (prestataire) => ArtisanCard(
+              name: prestataire['name'] as String,
+              specialty: prestataire['specialty'] as String,
+              rating: (prestataire['rating'] as num).toDouble(),
+              missions: prestataire['missions'] as int,
+              isAvailable: prestataire['available'] as bool,
               onTap: () {},
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _HowItWorksSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.backgroundTertiary, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'GUIDE RAPIDE',
-            style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 4,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Comment ça marche ?',
-            style: GoogleFonts.outfit(
-              color: AppColors.textPrimary,
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(height: 32),
-          _StepItem(
-            number: '01',
-            title: 'Décrivez votre besoin',
-            description: 'Choisissez un service ou lancez une demande express.',
-          ),
-          const SizedBox(height: 24),
-          _StepItem(
-            number: '02',
-            title: 'Mise en relation',
-            description: 'Notre algorithme trouve l\'artisan idéal proche de vous.',
-          ),
-          const SizedBox(height: 24),
-          _StepItem(
-            number: '03',
-            title: 'Intervention',
-            description: 'L\'artisan intervient et vous validez la prestation.',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StepItem extends StatelessWidget {
-  final String number;
-  final String title;
-  final String description;
-
-  const _StepItem({
-    required this.number,
-    required this.title,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          number,
-          style: GoogleFonts.outfit(
-            color: AppColors.neonBlue.withValues(alpha: 0.3),
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title.toUpperCase(),
-                style: GoogleFonts.outfit(
-                  color: AppColors.textPrimary,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                description,
-                style: GoogleFonts.inter(
-                  color: AppColors.textSecondary,
-                  fontSize: 13,
-                  height: 1.5,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

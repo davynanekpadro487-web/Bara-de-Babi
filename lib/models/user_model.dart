@@ -1,5 +1,5 @@
 /// Modèle Utilisateur — conforme UML Barra de Babi
-enum UserRole { client, artisan, admin }
+enum UserRole { client, prestataire, admin }
 
 class UserModel {
   final String id;
@@ -19,7 +19,7 @@ class UserModel {
   final double? latDomicile;
   final double? lngDomicile;
 
-  // Artisan specific
+  // Prestataire specific
   final String? specialitePrincipale;
   final double? noteMoyenne;
   final bool? estDisponible;
@@ -123,14 +123,14 @@ class UserModel {
         (prenom.isNotEmpty ? prenom[0].toUpperCase() : '');
   }
 
-  bool get isArtisan => role == UserRole.artisan;
+  bool get isArtisan => role == UserRole.prestataire;
   bool get isClient => role == UserRole.client;
   bool get isAdmin => role == UserRole.admin;
 
   static UserRole _parseRole(String role) {
     switch (role.toLowerCase()) {
       case 'artisan':
-        return UserRole.artisan;
+        return UserRole.prestataire;
       case 'admin':
         return UserRole.admin;
       default:

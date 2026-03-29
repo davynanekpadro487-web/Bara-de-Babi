@@ -20,27 +20,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<_OnboardingData> _pages = [
     const _OnboardingData(
       icon: Icons.search_rounded,
-      title: 'TROUVEZ\nVOTRE ARTISAN',
+      title: 'TROUVEZ\nVOTRE PRESTATAIRE',
       subtitle: 'En moins de 2 minutes',
       description:
-          'Plombier, électricien, menuisier, couturière... Trouvez un artisan vérifié et proche de chez vous à Abidjan.',
-      accentColor: AppColors.neonBlue,
+          'Plombier, électricien, menuisier, couturière... Trouvez un prestataire vérifié et proche de chez vous à Abidjan.',
+      accentColor: AppColors.primary,
     ),
     const _OnboardingData(
       icon: Icons.verified_user_rounded,
-      title: 'ARTISANS\nVÉRIFIÉS',
+      title: 'PRESTATAIRES\nVÉRIFIÉS',
       subtitle: 'Identité validée (KYC)',
       description:
-          'Chaque artisan est vérifié : pièce d\'identité, spécialité confirmée, avis clients authentiques.',
-      accentColor: AppColors.ivoryGreen,
+          'Chaque prestataire est vérifié : pièce d\'identité, spécialité confirmée, avis clients authentiques.',
+      accentColor: AppColors.success,
     ),
     const _OnboardingData(
       icon: Icons.flash_on_rounded,
       title: 'DEMANDE\nEXPRESS',
       subtitle: 'Brobro, c\'est rapide !',
       description:
-          'Un problème urgent ? Notre algorithme trouve l\'artisan disponible le plus proche en quelques secondes.',
-      accentColor: AppColors.neonOrange,
+          'Un problème urgent ? Notre algorithme trouve l\'prestataire disponible le plus proche en quelques secondes.',
+      accentColor: AppColors.primary,
     ),
   ];
 
@@ -77,9 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: AppColors.neonWarmGradient,
-        ),
+        color: AppColors.backgroundPrimary,
         child: SafeArea(
           child: Column(
             children: [
@@ -127,8 +125,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       controller: _pageController,
                       count: _pages.length,
                       effect: const ExpandingDotsEffect(
-                        activeDotColor: AppColors.neonBlue,
-                        dotColor: AppColors.backgroundTertiary,
+                        activeDotColor: AppColors.primary,
+                        dotColor: AppColors.backgroundSecondary,
                         dotWidth: 8,
                         dotHeight: 8,
                         expansionFactor: 4,
@@ -138,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     const SizedBox(height: 48),
 
                     // CTA Button
-                    GoldButton(
+                    PrimaryButton(
                       label: _currentPage == _pages.length - 1
                           ? 'COMMENCER'
                           : 'SUIVANT',

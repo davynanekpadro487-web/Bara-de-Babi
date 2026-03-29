@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/buttons.dart';
 import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 import 'client_home_screen.dart';
 import 'artisan_dashboard_screen.dart';
 
@@ -65,9 +66,8 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 60),
           child: Column(
@@ -81,7 +81,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
               Text(
                 'ÉTAPE 1',
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonBlue,
+                  color: AppColors.primary,
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 3,
@@ -102,7 +102,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                 width: 40,
                 height: 3,
                 decoration: BoxDecoration(
-                  gradient: AppColors.neonWarmGradient,
+                  gradient: AppColors.primaryGradient,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -122,8 +122,8 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                           color: Colors.white,
                           border: Border.all(
                             color: _photoSelected
-                                ? AppColors.neonBlue
-                                : AppColors.backgroundTertiary,
+                                ? AppColors.primary
+                                : AppColors.backgroundSecondary,
                             width: _photoSelected ? 2 : 1,
                           ),
                           boxShadow: [
@@ -139,7 +139,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                               ? Text(
                                   'KK',
                                   style: GoogleFonts.outfit(
-                                    color: AppColors.neonBlue,
+                                    color: AppColors.primary,
                                     fontSize: 36,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -158,7 +158,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                           padding: const EdgeInsets.all(8),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            gradient: AppColors.neonBlueGradient,
+                            gradient: AppColors.primaryGradient,
                           ),
                           child: const Icon(
                             Icons.add_rounded,
@@ -193,50 +193,74 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                     Text(
                       'NOM',
                       style: GoogleFonts.outfit(
-                        color: AppColors.textTertiary,
+                        color: AppColors.textSecondary, // Rendu un peu plus lisible (moins pale)
                         fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         letterSpacing: 2,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    TextField(
-                      controller: _nomController,
-                      style: GoogleFonts.inter(
-                        color: AppColors.textPrimary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
                       ),
-                      decoration: const InputDecoration(
-                        hintText: 'Votre nom de famille',
+                      child: TextField(
+                        controller: _nomController,
+                        style: GoogleFonts.inter(
+                          color: AppColors.textPrimary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: 'Votre nom de famille',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
                     Text(
                       'PRÉNOM',
                       style: GoogleFonts.outfit(
-                        color: AppColors.textTertiary,
+                        color: AppColors.textSecondary,
                         fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         letterSpacing: 2,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    TextField(
-                      controller: _prenomController,
-                      style: GoogleFonts.inter(
-                        color: AppColors.textPrimary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
                       ),
-                      decoration: const InputDecoration(hintText: 'Votre prénom'),
+                      child: TextField(
+                        controller: _prenomController,
+                        style: GoogleFonts.inter(
+                          color: AppColors.textPrimary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: 'Votre prénom',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 48),
 
-              GoldButton(
+              PrimaryButton(
                 label: 'CONTINUER',
                 onPressed: _continuer,
                 isFullWidth: true,
@@ -249,7 +273,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
   }
 }
 
-/// Screen 09-11 — KYC Artisan: Upload CIN + Choice Specialist
+/// Screen 09-11 — KYC Prestataire: Upload CIN + Choice Specialist
 class KycUploadScreen extends StatefulWidget {
   const KycUploadScreen({super.key});
 
@@ -305,9 +329,8 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
         child: Column(
           children: [
             SafeArea(
@@ -372,7 +395,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
           Text(
             'ÉTAPE ${_step + 2} / 4',
             style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
+              color: AppColors.primary,
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 3,
@@ -393,7 +416,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
             width: 40,
             height: 3,
             decoration: BoxDecoration(
-              gradient: AppColors.neonWarmGradient,
+              gradient: AppColors.primaryGradient,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -418,7 +441,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
                 color: uploaded ? AppColors.success.withValues(alpha: 0.1) : Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: uploaded ? AppColors.success : AppColors.backgroundTertiary,
+                  color: uploaded ? AppColors.success : AppColors.backgroundSecondary,
                   width: uploaded ? 2 : 1,
                 ),
                 boxShadow: [
@@ -434,7 +457,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
                 children: [
                   Icon(
                     uploaded ? Icons.check_circle_rounded : Icons.cloud_upload_rounded,
-                    color: uploaded ? AppColors.success : AppColors.neonBlue,
+                    color: uploaded ? AppColors.success : AppColors.primary,
                     size: 56,
                   ),
                   const SizedBox(height: 16),
@@ -473,7 +496,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
           Text(
             'ÉTAPE 4 / 4',
             style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
+              color: AppColors.primary,
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 3,
@@ -494,7 +517,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
             width: 40,
             height: 3,
             decoration: BoxDecoration(
-              gradient: AppColors.neonWarmGradient,
+              gradient: AppColors.primaryGradient,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -509,10 +532,10 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
                   duration: const Duration(milliseconds: 250),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: _selectedSpecialty == s['id'] ? AppColors.neonBlue.withValues(alpha: 0.1) : Colors.white,
+                    color: _selectedSpecialty == s['id'] ? AppColors.primary.withValues(alpha: 0.1) : Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: _selectedSpecialty == s['id'] ? AppColors.neonBlue : AppColors.backgroundTertiary,
+                      color: _selectedSpecialty == s['id'] ? AppColors.primary : AppColors.backgroundSecondary,
                       width: _selectedSpecialty == s['id'] ? 2 : 1,
                     ),
                     boxShadow: [
@@ -546,7 +569,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
                       if (_selectedSpecialty == s['id'])
                         const Icon(
                           Icons.check_circle_rounded,
-                          color: AppColors.neonBlue,
+                          color: AppColors.primary,
                           size: 24,
                         ),
                     ],
@@ -557,7 +580,7 @@ class _KycUploadScreenState extends State<KycUploadScreen> {
           ),
           const SizedBox(height: 32),
 
-          GoldButton(
+          PrimaryButton(
             label: 'SOUMETTRE MON DOSSIER',
             onPressed: _selectedSpecialty != null ? _submit : null,
             isFullWidth: true,
@@ -576,9 +599,8 @@ class KycPendingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(32),
@@ -614,7 +636,7 @@ class KycPendingScreen extends StatelessWidget {
                   width: 40,
                   height: 3,
                   decoration: BoxDecoration(
-                    gradient: AppColors.neonWarmGradient,
+                    gradient: AppColors.primaryGradient,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -645,9 +667,8 @@ class _WelcomeReadyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(32),
@@ -679,8 +700,8 @@ class _WelcomeReadyScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   role == 'client' 
-                    ? 'Votre compte a été créé avec succès.\nCommencez à trouver des artisans !'
-                    : 'Votre compte artisan a été validé !\nCommencez à recevoir des demandes.',
+                    ? 'Votre compte a été créé avec succès.\nCommencez à trouver des prestataires !'
+                    : 'Votre compte prestataire a été validé !\nCommencez à recevoir des demandes.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: AppColors.textSecondary,
@@ -689,7 +710,7 @@ class _WelcomeReadyScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 48),
-                GoldButton(
+                PrimaryButton(
                   label: 'C\'EST PARTI !',
                   onPressed: () => Navigator.pushAndRemoveUntil(
                     context,

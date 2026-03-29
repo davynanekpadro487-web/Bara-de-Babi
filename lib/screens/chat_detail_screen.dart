@@ -111,13 +111,13 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                 height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: AppColors.neonBlueGradient,
+                  gradient: AppColors.primaryGradient,
                 ),
                 child: Center(
                   child: Text(
                     widget.name[0],
                     style: GoogleFonts.outfit(
-                      color: AppColors.textOnNeon,
+                      color: AppColors.textOnPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -155,7 +155,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
               Text(
                 widget.specialty.toUpperCase(),
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1,
@@ -187,7 +187,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
       decoration: BoxDecoration(
         color: AppColors.backgroundSecondary,
         border: Border(
-          top: BorderSide(color: AppColors.glassBorder.withValues(alpha: 0.3)),
+          top: BorderSide(color: AppColors.borderColor.withValues(alpha: 0.3)),
         ),
       ),
       child: Row(
@@ -221,11 +221,11 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
               height: 48,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: AppColors.neonBlueGradient,
+                gradient: AppColors.primaryGradient,
               ),
               child: const Icon(
                 Icons.send_rounded,
-                color: AppColors.textOnNeon,
+                color: AppColors.textOnPrimary,
                 size: 20,
               ),
             ),
@@ -279,7 +279,7 @@ class _ChatBubble extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: isMe
-                    ? AppColors.neonPurple.withValues(alpha: 0.1)
+                    ? AppColors.primary.withValues(alpha: 0.1)
                     : AppColors.backgroundCard,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(20),
@@ -289,8 +289,8 @@ class _ChatBubble extends StatelessWidget {
                 ),
                 border: Border.all(
                   color: isMe
-                      ? AppColors.neonPurple.withValues(alpha: 0.3)
-                      : AppColors.glassBorder,
+                      ? AppColors.primary.withValues(alpha: 0.3)
+                      : AppColors.borderColor,
                   width: 0.5,
                 ),
               ),
@@ -320,7 +320,7 @@ class _ChatBubble extends StatelessWidget {
                         const SizedBox(width: 4),
                         const Icon(
                           Icons.done_all_rounded,
-                          color: AppColors.neonPurple,
+                          color: AppColors.primary,
                           size: 12,
                         ),
                       ],

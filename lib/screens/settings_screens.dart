@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/glass_container.dart';
 import '../widgets/buttons.dart';
+import '../widgets/premium_background.dart';
 
 /// Écran 34 — Paramètres du compte (modifier nom, photo, horaires, prix)
 class SettingsScreen extends StatefulWidget {
@@ -30,8 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: Column(
           children: [
             _buildAppBar(context),
@@ -50,13 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             height: 90,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: AppColors.neonBlueGradient,
+                              gradient: AppColors.primaryGradient,
                             ),
                             child: Center(
                               child: Text(
                                 'K',
                                 style: GoogleFonts.outfit(
-                                  color: AppColors.textOnNeon,
+                                  color: AppColors.textOnPrimary,
                                   fontSize: 40,
                                   fontWeight: FontWeight.w900,
                                 ),
@@ -72,13 +72,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 shape: BoxShape.circle,
                                 color: AppColors.backgroundSecondary,
                                 border: Border.all(
-                                  color: AppColors.neonBlue,
+                                  color: AppColors.primary,
                                   width: 2,
                                 ),
                               ),
                               child: const Icon(
                                 Icons.edit_rounded,
-                                color: AppColors.neonBlue,
+                                color: AppColors.primary,
                                 size: 14,
                               ),
                             ),
@@ -147,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Horaires de travail (artisan)
+                    // Horaires de travail (prestataire)
                     Text(
                       'HORAIRES DE TRAVAIL',
                       style: GoogleFonts.outfit(
@@ -163,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.backgroundTertiary, width: 1),
+                        border: Border.all(color: AppColors.backgroundSecondary, width: 1),
                       ),
                       child: Column(
                         children: [
@@ -203,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.backgroundTertiary, width: 1),
+                        border: Border.all(color: AppColors.backgroundSecondary, width: 1),
                       ),
                       child: const Column(
                         children: [
@@ -241,7 +241,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.backgroundTertiary, width: 1),
+                        border: Border.all(color: AppColors.backgroundSecondary, width: 1),
                       ),
                       child: Column(
                         children: [
@@ -259,11 +259,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value: _notificationsEnabled,
                                 onChanged: (v) =>
                                     setState(() => _notificationsEnabled = v),
-                                activeColor: AppColors.neonBlue,
+                                activeColor: AppColors.primary,
                               ),
                             ],
                           ),
-                          const Divider(color: AppColors.backgroundTertiary, height: 1),
+                          const Divider(color: AppColors.backgroundSecondary, height: 1),
                           const SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -286,7 +286,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     Text(
                                       _language,
                                       style: GoogleFonts.inter(
-                                        color: AppColors.neonBlue,
+                                        color: AppColors.primary,
                                         fontSize: 14,
                                       ),
                                     ),
@@ -306,7 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const SizedBox(height: 28),
 
-                    GoldButton(
+                    PrimaryButton(
                       label: 'SAUVEGARDER',
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -451,7 +451,7 @@ class _PriceRow extends StatelessWidget {
           Text(
             price,
             style: GoogleFonts.inter(
-              color: AppColors.neonPurple,
+              color: AppColors.primary,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -462,7 +462,7 @@ class _PriceRow extends StatelessWidget {
   }
 }
 
-/// Écran 35 — Bascule de rôle : Client ↔ Artisan
+/// Écran 35 — Bascule de rôle : Client ↔ Prestataire
 class RoleSwitchScreen extends StatelessWidget {
   final String currentRole;
   const RoleSwitchScreen({super.key, this.currentRole = 'client'});
@@ -472,9 +472,7 @@ class RoleSwitchScreen extends StatelessWidget {
     final isClient = currentRole == 'client';
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: Column(
           children: [
             _buildAppBar(context),
@@ -499,7 +497,7 @@ class RoleSwitchScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                gradient: AppColors.neonWarmGradient,
+                color: AppColors.backgroundSecondary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -507,14 +505,14 @@ class RoleSwitchScreen extends StatelessWidget {
                 children: [
                   Icon(
                     isClient ? Icons.person_rounded : Icons.handyman_rounded,
-                    color: AppColors.textOnNeon,
+                    color: AppColors.primary,
                     size: 32,
                   ),
                   const SizedBox(width: 14),
                   Text(
-                    isClient ? 'CLIENT' : 'ARTISAN',
+                    isClient ? 'CLIENT' : 'PRESTATAIRE',
                     style: GoogleFonts.outfit(
-                      color: AppColors.textOnNeon,
+                      color: AppColors.textPrimary,
                       fontSize: 24,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 3,
@@ -555,7 +553,7 @@ class RoleSwitchScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 14),
                   Text(
-                    isClient ? 'ARTISAN' : 'CLIENT',
+                    isClient ? 'PRESTATAIRE' : 'CLIENT',
                     style: GoogleFonts.outfit(
                       color: AppColors.textPrimary,
                       fontSize: 24,
@@ -569,8 +567,8 @@ class RoleSwitchScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               isClient
-                  ? 'En mode Artisan, vous recevrez des demandes de missions et pourrez gérer votre activité.'
-                  : 'En mode Client, vous pourrez rechercher et contacter des artisans.',
+                  ? 'En mode Prestataire, vous recevrez des demandes de missions et pourrez gérer votre activité.'
+                  : 'En mode Client, vous pourrez rechercher et contacter des prestataires.',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: AppColors.textSecondary,
@@ -580,13 +578,13 @@ class RoleSwitchScreen extends StatelessWidget {
             ),
             const Spacer(),
 
-            GoldButton(
+            PrimaryButton(
               label: 'CONFIRMER LA BASCULE',
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'Basculé en mode ${isClient ? "Artisan" : "Client"} ! (simulation)',
+                      'Basculé en mode ${isClient ? "Prestataire" : "Client"} ! (simulation)',
                       style: GoogleFonts.inter(fontSize: 13),
                     ),
                     backgroundColor: AppColors.success,

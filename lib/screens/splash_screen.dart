@@ -112,9 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: AppColors.neonWarmGradient,
-        ),
+        color: AppColors.backgroundPrimary,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -131,10 +129,10 @@ class _SplashScreenState extends State<SplashScreen>
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: AppColors.neonBlueGradient,
+                        gradient: AppColors.primaryGradient,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.neonBlue.withValues(alpha: 0.3),
+                            color: AppColors.primary.withValues(alpha: 0.3),
                             blurRadius: 40,
                             spreadRadius: 5,
                           ),
@@ -181,7 +179,7 @@ class _SplashScreenState extends State<SplashScreen>
                   width: _lineWidth.value,
                   height: 3,
                   decoration: BoxDecoration(
-                    gradient: AppColors.neonWarmGradient,
+                    gradient: AppColors.primaryGradient,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),

@@ -21,7 +21,7 @@ class ApiService {
   // ─── Users ────────────────────────────────────────
   static Future<List<UserModel>> getArtisans() async {
     try {
-      final response = await http.get(Uri.parse('$_baseUrl/artisans'));
+      final response = await http.get(Uri.parse('$_baseUrl/prestataires'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         return data.map((json) => UserModel.fromJson(json)).toList();

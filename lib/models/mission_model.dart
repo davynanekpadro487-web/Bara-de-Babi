@@ -2,8 +2,8 @@
 enum MissionStatut {
   enAttente, // EN_ATTENTE
   recherche, // RECHERCHE (broadcast en cours)
-  acceptee, // ACCEPTÉE par un artisan
-  enCours, // EN_COURS (artisan en route / travail)
+  acceptee, // ACCEPTÉE par un prestataire
+  enCours, // EN_COURS (prestataire en route / travail)
   terminee, // TERMINÉE
   annulee, // ANNULÉE
 }
@@ -82,7 +82,7 @@ class MissionModel {
       case MissionStatut.enAttente:
         return 'En attente';
       case MissionStatut.recherche:
-        return 'Recherche artisan...';
+        return 'Recherche prestataire...';
       case MissionStatut.acceptee:
         return 'Acceptée';
       case MissionStatut.enCours:

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/glass_container.dart';
 import '../widgets/buttons.dart';
+import '../widgets/premium_background.dart';
 
 /// Live Tracking Screen — Warm Theme
 class LiveTrackingScreen extends StatefulWidget {
@@ -58,8 +59,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: Column(
           children: [
             // Map
@@ -70,7 +70,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: AppColors.backgroundTertiary),
+                  border: Border.all(color: AppColors.backgroundSecondary),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.05),
@@ -85,11 +85,11 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                       // Grid
                       ...List.generate(10, (i) => Positioned(
                         top: i * 50.0, left: 0, right: 0,
-                        child: Container(height: 0.5, color: AppColors.backgroundTertiary),
+                        child: Container(height: 0.5, color: AppColors.backgroundSecondary),
                       )),
                       ...List.generate(10, (i) => Positioned(
                         left: i * 50.0, top: 0, bottom: 0,
-                        child: Container(width: 0.5, color: AppColors.backgroundTertiary),
+                        child: Container(width: 0.5, color: AppColors.backgroundSecondary),
                       )),
                       
                       // Path
@@ -103,17 +103,17 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                       Positioned(
                         bottom: 40,
                         right: 40,
-                        child: _MapPin(label: 'VOUS', color: AppColors.neonBlue, icon: Icons.person_pin_circle_rounded),
+                        child: _MapPin(label: 'VOUS', color: AppColors.primary, icon: Icons.person_pin_circle_rounded),
                       ),
 
-                      // Artisan Pin
+                      // Prestataire Pin
                       AnimatedBuilder(
                         animation: _dotAnimation,
                         builder: (_, __) => Positioned(
                           top: 40 + (300 * _progress),
                           left: 40 + (250 * _progress),
                           child: _MapPin(
-                            label: 'ARTISAN', 
+                            label: 'PRESTATAIRE', 
                             color: AppColors.success, 
                             icon: Icons.navigation_rounded,
                             scale: 1.0 + (_dotAnimation.value * 0.1),
@@ -147,7 +147,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                             Text(
                               'ARRIVÉE PRÉVUE',
                               style: GoogleFonts.outfit(
-                                color: AppColors.neonBlue,
+                                color: AppColors.primary,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: 2,
@@ -189,7 +189,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                       value: _progress,
                       minHeight: 8,
                       backgroundColor: AppColors.backgroundSecondary,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.neonBlue),
+                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -204,7 +204,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen>
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: GoldButton(
+                        child: PrimaryButton(
                           label: 'APPELER',
                           icon: Icons.phone_rounded,
                           showArrow: false,
@@ -265,7 +265,7 @@ class _RoutePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.neonBlue.withValues(alpha: 0.2)
+      ..color = AppColors.primary.withValues(alpha: 0.2)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -278,7 +278,7 @@ class _RoutePainter extends CustomPainter {
     
     // Draw active part
     final activePaint = Paint()
-      ..color = AppColors.neonBlue
+      ..color = AppColors.primary
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -304,8 +304,7 @@ class ClientMissionScreen extends StatelessWidget {
           style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 2),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -332,7 +331,7 @@ class ClientMissionScreen extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'PLOMBERIE',
-                style: GoogleFonts.outfit(color: AppColors.neonBlue, fontSize: 11, fontWeight: FontWeight.w800, letterSpacing: 4),
+                style: GoogleFonts.outfit(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.w800, letterSpacing: 4),
               ),
               const SizedBox(height: 4),
               Text(
@@ -344,13 +343,13 @@ class ClientMissionScreen extends StatelessWidget {
               GlassContainer(
                 padding: const EdgeInsets.all(24),
                 borderRadius: 24,
-                borderColor: AppColors.backgroundTertiary,
+                borderColor: AppColors.backgroundSecondary,
                 gradient: const LinearGradient(colors: [Colors.white, Color(0xFFFCFAF7)]),
                 child: Row(
                   children: [
                     Container(
                       width: 60, height: 60,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, gradient: AppColors.neonBlueGradient),
+                      decoration: const BoxDecoration(shape: BoxShape.circle, gradient: AppColors.primaryGradient),
                       child: Center(child: Text('S', style: GoogleFonts.outfit(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
                     ),
                     const SizedBox(width: 16),
@@ -359,11 +358,11 @@ class ClientMissionScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Soro Ibrahim', style: GoogleFonts.outfit(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w900)),
-                          Text('PLOMBIER CERTIFIÉ', style: GoogleFonts.outfit(color: AppColors.neonBlue, fontSize: 11, fontWeight: FontWeight.w800)),
+                          Text('PLOMBIER CERTIFIÉ', style: GoogleFonts.outfit(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.w800)),
                         ],
                       ),
                     ),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.phone_in_talk_rounded, color: AppColors.neonBlue)),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.phone_in_talk_rounded, color: AppColors.primary)),
                   ],
                 ),
               ),
@@ -375,7 +374,7 @@ class ClientMissionScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: AppColors.backgroundTertiary),
+                  border: Border.all(color: AppColors.backgroundSecondary),
                 ),
                 child: Column(
                   children: [
@@ -389,7 +388,7 @@ class ClientMissionScreen extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              GoldButton(
+              PrimaryButton(
                 label: 'VOIR SUR LA CARTE',
                 icon: Icons.map_rounded,
                 isFullWidth: true,
@@ -397,7 +396,7 @@ class ClientMissionScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               GhostButton(
-                label: 'CONTACTER L\'ARTISAN',
+                label: 'CONTACTER L\'PRESTATAIRE',
                 icon: Icons.chat_bubble_outline_rounded,
                 isFullWidth: true,
                 onPressed: () {},
@@ -436,7 +435,7 @@ class NotificationCenterScreen extends StatelessWidget {
   const NotificationCenterScreen({super.key});
 
   static const List<Map<String, dynamic>> _notifications = [
-    {'title': 'Artisan en route', 'body': 'Soro Ibrahim arrive dans 5 minutes.', 'time': 'À l\'instant', 'read': false, 'icon': Icons.directions_car_rounded},
+    {'title': 'Prestataire en route', 'body': 'Soro Ibrahim arrive dans 5 minutes.', 'time': 'À l\'instant', 'read': false, 'icon': Icons.directions_car_rounded},
     {'title': 'Mission validée', 'body': 'Votre paiement a été reçu avec succès.', 'time': '2h ago', 'read': true, 'icon': Icons.check_circle_rounded},
     {'title': 'Nouveau message', 'body': 'Lassina : "Je suis prêt pour demain."', 'time': 'Hier', 'read': true, 'icon': Icons.chat_rounded},
   ];
@@ -447,8 +446,7 @@ class NotificationCenterScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('NOTIFICATIONS', style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 2)),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: ListView.builder(
           padding: const EdgeInsets.all(24),
           itemCount: _notifications.length,
@@ -461,15 +459,15 @@ class NotificationCenterScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isRead ? Colors.white.withValues(alpha: 0.7) : Colors.white,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: isRead ? AppColors.backgroundTertiary : AppColors.neonBlue.withValues(alpha: 0.3)),
+                border: Border.all(color: isRead ? AppColors.backgroundSecondary : AppColors.primary.withValues(alpha: 0.3)),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(color: AppColors.neonBlue.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-                    child: Icon(n['icon'] as IconData, color: AppColors.neonBlue, size: 20),
+                    decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                    child: Icon(n['icon'] as IconData, color: AppColors.primary, size: 20),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -484,7 +482,7 @@ class NotificationCenterScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (!isRead) Container(width: 8, height: 8, decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.neonBlue)),
+                  if (!isRead) Container(width: 8, height: 8, decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary)),
                 ],
               ),
             );
@@ -511,17 +509,16 @@ class _RatingScreenState extends State<RatingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NOTER L\'ARTISAN', style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 2)),
+        title: Text('NOTER L\'PRESTATAIRE', style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 2)),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32),
           child: Column(
             children: [
               Container(
                 width: 100, height: 100,
-                decoration: const BoxDecoration(shape: BoxShape.circle, gradient: AppColors.neonBlueGradient),
+                decoration: const BoxDecoration(shape: BoxShape.circle, gradient: AppColors.primaryGradient),
                 child: Center(child: Text('S', style: GoogleFonts.outfit(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w900))),
               ),
               const SizedBox(height: 24),
@@ -533,13 +530,13 @@ class _RatingScreenState extends State<RatingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(5, (index) => IconButton(
                   onPressed: () => setState(() => _rating = index + 1),
-                  icon: Icon(index < _rating ? Icons.star_rounded : Icons.star_outline_rounded, color: AppColors.neonBlue, size: 48),
+                  icon: Icon(index < _rating ? Icons.star_rounded : Icons.star_outline_rounded, color: AppColors.primary, size: 48),
                 )),
               ),
               const SizedBox(height: 32),
               Container(
                 padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.backgroundTertiary)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.backgroundSecondary)),
                 child: TextField(
                   controller: _commentController,
                   maxLines: 4,
@@ -548,7 +545,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
               ),
               const SizedBox(height: 48),
-              GoldButton(
+              PrimaryButton(
                 label: 'ENVOYER L\'AVIS',
                 isFullWidth: true,
                 onPressed: () {

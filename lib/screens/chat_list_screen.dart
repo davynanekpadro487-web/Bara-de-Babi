@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
+import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 
 /// Chat List Screen — List of conversations with Warm Theme
 class ChatListScreen extends StatelessWidget {
@@ -43,72 +45,70 @@ class ChatListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'MESSAGERIE',
-                    style: GoogleFonts.outfit(
-                      color: AppColors.neonBlue,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 4,
-                    ),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'MESSAGERIE',
+                  style: GoogleFonts.outfit(
+                    color: AppColors.primary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2,
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Messages',
-                    style: GoogleFonts.outfit(
-                      color: AppColors.textPrimary,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                    ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Messages',
+                  style: GoogleFonts.outfit(
+                    color: AppColors.textPrimary,
+                    fontSize: 34,
+                    fontWeight: FontWeight.w900,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 32),
+          ),
+          const SizedBox(height: 32),
 
-            // Conversations list
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                itemCount: _conversations.length,
-                itemBuilder: (context, index) {
-                  final conv = _conversations[index];
-                  return _ConversationTile(
-                    name: conv['name'] as String,
-                    job: conv['job'] as String,
-                    lastMessage: conv['lastMessage'] as String,
-                    time: conv['time'] as String,
-                    unread: conv['unread'] as int,
-                    isOnline: conv['online'] as bool,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ChatDetailScreen(
-                            name: conv['name'] as String,
-                            job: conv['job'] as String,
-                          ),
+          // Conversations list
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              physics: const BouncingScrollPhysics(),
+              itemCount: _conversations.length,
+              itemBuilder: (context, index) {
+                final conv = _conversations[index];
+                return _ConversationTile(
+                  name: conv['name'] as String,
+                  job: conv['job'] as String,
+                  lastMessage: conv['lastMessage'] as String,
+                  time: conv['time'] as String,
+                  unread: conv['unread'] as int,
+                  isOnline: conv['online'] as bool,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ChatDetailScreen(
+                          name: conv['name'] as String,
+                          job: conv['job'] as String,
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -135,155 +135,153 @@ class _ConversationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return GlassContainer(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      borderRadius: 24,
       onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-            color: unread > 0 ? AppColors.neonBlue.withValues(alpha: 0.3) : AppColors.backgroundTertiary,
-            width: unread > 0 ? 1.5 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Avatar + online indicator
-            Stack(
-              children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: AppColors.neonBlueGradient,
+      child: Row(
+        children: [
+          // Avatar + online indicator
+          Stack(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: AppColors.primaryGradient,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    name[0],
+                    style: GoogleFonts.outfit(
+                      color: Colors.white,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                  child: Center(
-                    child: Text(
-                      name[0],
-                      style: GoogleFonts.outfit(
+                ),
+              ),
+              if (isOnline)
+                Positioned(
+                  right: 2,
+                  bottom: 2,
+                  child: Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.success,
+                      border: Border.all(
                         color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
+                        width: 2.5,
                       ),
                     ),
                   ),
                 ),
-                if (isOnline)
-                  Positioned(
-                    right: 2,
-                    bottom: 2,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.success,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2.5,
-                        ),
+            ],
+          ),
+          const SizedBox(width: 16),
+
+          // Text content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.outfit(
+                        color: AppColors.textPrimary,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
-                  ),
-              ],
-            ),
-            const SizedBox(width: 16),
-
-            // Text content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        name,
-                        style: GoogleFonts.outfit(
-                          color: AppColors.textPrimary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                        ),
+                    Text(
+                      time,
+                      style: GoogleFonts.inter(
+                        color: unread > 0
+                            ? AppColors.primary
+                            : AppColors.textTertiary,
+                        fontSize: 12,
+                        fontWeight: unread > 0 ? FontWeight.w800 : FontWeight.w500,
                       ),
-                      Text(
-                        time,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  job.toUpperCase(),
+                  style: GoogleFonts.outfit(
+                    color: AppColors.primary,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        lastMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.inter(
                           color: unread > 0
-                              ? AppColors.neonBlue
+                              ? AppColors.textPrimary
                               : AppColors.textTertiary,
-                          fontSize: 12,
-                          fontWeight: unread > 0 ? FontWeight.w700 : FontWeight.w500,
+                          fontSize: 13,
+                          fontWeight: unread > 0
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    job.toUpperCase(),
-                    style: GoogleFonts.outfit(
-                      color: AppColors.neonBlue,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      Expanded(
+                    if (unread > 0) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.3),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: Text(
-                          lastMessage,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.inter(
-                            color: unread > 0
-                                ? AppColors.textPrimary
-                                : AppColors.textTertiary,
-                            fontSize: 13,
-                            fontWeight: unread > 0
-                                ? FontWeight.w600
-                                : FontWeight.w500,
+                          '$unread',
+                          style: GoogleFonts.outfit(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       ),
-                      if (unread > 0) ...[
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.neonBlue,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '$unread',
-                            style: GoogleFonts.outfit(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                      ],
                     ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -400,7 +398,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               height: 38,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: AppColors.neonBlueGradient,
+                gradient: AppColors.primaryGradient,
               ),
               child: Center(
                 child: Text(
@@ -445,8 +443,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           const SizedBox(width: 4),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: Column(
           children: [
             Expanded(
@@ -465,62 +462,46 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 },
               ),
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 20,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
+            GlassContainer(
+              margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              borderRadius: 32,
               child: SafeArea(
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundSecondary,
-                          borderRadius: BorderRadius.circular(24),
+                      child: TextField(
+                        controller: _messageController,
+                        style: GoogleFonts.inter(
+                          color: AppColors.textPrimary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
                         ),
-                        child: TextField(
-                          controller: _messageController,
-                          style: GoogleFonts.inter(
-                            color: AppColors.textPrimary,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: 'Écrivez un message...',
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(vertical: 14),
-                          ),
-                          onSubmitted: (_) => _sendMessage(),
+                        decoration: const InputDecoration(
+                          hintText: 'Écrivez un message...',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 14),
                         ),
+                        onSubmitted: (_) => _sendMessage(),
                       ),
                     ),
-                    const SizedBox(width: 14),
+                    const SizedBox(width: 8),
                     GestureDetector(
                       onTap: _sendMessage,
                       child: Container(
-                        width: 50,
-                        height: 50,
+                        width: 48,
+                        height: 48,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: AppColors.neonWarmGradient,
+                          gradient: AppColors.primaryGradient,
                         ),
                         child: const Center(
                           child: Icon(
                             Icons.send_rounded,
                             color: Colors.white,
-                            size: 22,
+                            size: 20,
                           ),
                         ),
                       ),
@@ -561,7 +542,7 @@ class _ChatBubble extends StatelessWidget {
               maxWidth: MediaQuery.of(context).size.width * 0.75,
             ),
             decoration: BoxDecoration(
-              gradient: isMe ? AppColors.neonWarmGradient : null,
+              gradient: isMe ? AppColors.primaryGradient : null,
               color: isMe ? null : Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(20),

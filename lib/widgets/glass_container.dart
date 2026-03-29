@@ -26,10 +26,10 @@ class GlassContainer extends StatelessWidget {
     this.height,
     this.padding,
     this.margin,
-    this.borderRadius = 20,
-    this.blur = 25,
+    this.borderRadius = 32,
+    this.blur = 40, // Flou intense style iOS 26
     this.borderColor,
-    this.borderWidth = 1.2,
+    this.borderWidth = 1.0, 
     this.gradient,
     this.borderGradient,
     this.shadows,
@@ -48,17 +48,43 @@ class GlassContainer extends StatelessWidget {
     Widget content = Container(
       width: width,
       height: height,
-      padding: padding ?? const EdgeInsets.all(24),
+      padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: effectiveGradient,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
-      child: child,
+      child: Stack(
+        children: [
+          // Gloss Glow (Reproduit l'éclat du verre Apple)
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(borderRadius),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withValues(alpha: 0.15),
+                    Colors.white.withValues(alpha: 0.02),
+                    Colors.transparent,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0.0, 0.3, 1.0],
+                ),
+              ),
+            ),
+          ),
+          child,
+        ],
+      ),
     );
 
-    // Construction du Glassmorphism avec reflets
+    // Construction du Glassmorphism avec reflets et flou intense
     Widget glass = Container(
       margin: margin,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
+        boxShadow: shadows ?? AppColors.premiumShadow,
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: BackdropFilter(
@@ -74,26 +100,6 @@ class GlassContainer extends StatelessWidget {
         ),
       ),
     );
-
-    // Ajout d'une ombre douce pour la profondeur
-    if (shadows != null || true) {
-      glass = Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow:
-              shadows ??
-              [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.25),
-                  blurRadius: 30,
-                  spreadRadius: -5,
-                  offset: const Offset(0, 15),
-                ),
-              ],
-        ),
-        child: glass,
-      );
-    }
 
     if (onTap != null) {
       return GestureDetector(

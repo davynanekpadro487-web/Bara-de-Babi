@@ -5,7 +5,7 @@ import '../widgets/glass_container.dart';
 import '../widgets/buttons.dart';
 import '../widgets/cards.dart';
 
-/// Écran 26 — Tableau de bord Artisan
+/// Écran 26 — Tableau de bord Prestataire
 class ArtisanDashboardScreen extends StatefulWidget {
   const ArtisanDashboardScreen({super.key});
 
@@ -33,7 +33,7 @@ class _ArtisanDashboardScreenState extends State<ArtisanDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+        color: AppColors.backgroundPrimary,
         child: IndexedStack(index: _currentIndex, children: _screens),
       ),
       bottomNavigationBar: _buildBottomNav(),
@@ -45,7 +45,7 @@ class _ArtisanDashboardScreenState extends State<ArtisanDashboardScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
-          top: BorderSide(color: AppColors.backgroundTertiary, width: 1),
+          top: BorderSide(color: AppColors.backgroundSecondary, width: 1),
         ),
         boxShadow: [
           BoxShadow(
@@ -122,7 +122,7 @@ class _NavItem extends StatelessWidget {
                 icon,
                 size: 24,
                 color: isSelected
-                    ? AppColors.neonBlue
+                    ? AppColors.primary
                     : AppColors.textTertiary.withValues(alpha: 0.6),
               ),
             ),
@@ -131,7 +131,7 @@ class _NavItem extends StatelessWidget {
               label,
               style: GoogleFonts.outfit(
                 color: isSelected
-                    ? AppColors.neonBlue
+                    ? AppColors.primary
                     : AppColors.textTertiary.withValues(alpha: 0.6),
                 fontSize: 9,
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.w700,
@@ -146,7 +146,7 @@ class _NavItem extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════
-// Écran 26 — Dashboard home artisan
+// Écran 26 — Dashboard home prestataire
 // ═══════════════════════════════════════════════════════
 class _ArtisanHomeContent extends StatefulWidget {
   const _ArtisanHomeContent();
@@ -177,7 +177,7 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
                     Text(
                       'TABLEAU DE BORD',
                       style: GoogleFonts.outfit(
-                        color: AppColors.neonBlue,
+                        color: AppColors.primary,
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 4,
@@ -199,7 +199,7 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppColors.glassBorder,
+                      color: AppColors.borderColor,
                       width: 0.5,
                     ),
                   ),
@@ -349,14 +349,14 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                gradient: AppColors.neonWarmGradient,
+                gradient: AppColors.primaryGradient,
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Row(
                 children: [
                   const Icon(
                     Icons.verified_rounded,
-                    color: AppColors.textOnNeon,
+                    color: AppColors.textOnPrimary,
                     size: 28,
                   ),
                   const SizedBox(width: 14),
@@ -367,7 +367,7 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
                         Text(
                           'PLAN PRO',
                           style: GoogleFonts.outfit(
-                            color: AppColors.textOnNeon,
+                            color: AppColors.textOnPrimary,
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 1.5,
@@ -376,7 +376,7 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
                         Text(
                           'Expire le 15 Avril 2026',
                           style: GoogleFonts.inter(
-                            color: AppColors.textOnNeon.withValues(alpha: 0.7),
+                            color: AppColors.textOnPrimary.withValues(alpha: 0.7),
                             fontSize: 12,
                           ),
                         ),
@@ -389,13 +389,13 @@ class _ArtisanHomeContentState extends State<_ArtisanHomeContent> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.textOnNeon.withValues(alpha: 0.15),
+                      color: AppColors.textOnPrimary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       'ACTIF',
                       style: GoogleFonts.outfit(
-                        color: AppColors.textOnNeon,
+                        color: AppColors.textOnPrimary,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1,
@@ -462,13 +462,13 @@ class _MissionCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isActive
-            ? AppColors.neonPurple.withValues(alpha: 0.05)
+            ? AppColors.primary.withValues(alpha: 0.05)
             : AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: isActive
-              ? AppColors.neonPurple.withValues(alpha: 0.3)
-              : AppColors.glassBorder,
+              ? AppColors.primary.withValues(alpha: 0.3)
+              : AppColors.borderColor,
           width: isActive ? 1 : 0.5,
         ),
       ),
@@ -479,13 +479,13 @@ class _MissionCard extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.neonPurple.withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
             ),
             child: Center(
               child: Text(
                 (mission['client'] as String)[0],
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
@@ -521,7 +521,7 @@ class _MissionCard extends StatelessWidget {
               Text(
                 '${mission['price']} F',
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
@@ -600,7 +600,7 @@ class _ArtisanMissionsContent extends StatelessWidget {
             Text(
               'MES MISSIONS',
               style: GoogleFonts.outfit(
-                color: AppColors.neonPurple,
+                color: AppColors.primary,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
@@ -780,7 +780,7 @@ class _IncomingMissionCard extends StatelessWidget {
               Text(
                 '${mission['price']} FCFA',
                 style: GoogleFonts.inter(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -800,7 +800,7 @@ class _IncomingMissionCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: GoldButton(label: 'ACCEPTER', onPressed: () {}),
+                child: PrimaryButton(label: 'ACCEPTER', onPressed: () {}),
               ),
             ],
           ),
@@ -886,7 +886,7 @@ class _ActiveMissionCard extends StatelessWidget {
               Text(
                 '${mission['price']} F',
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
@@ -944,7 +944,7 @@ class _CompletedMissionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.glassBorder, width: 0.5),
+        border: Border.all(color: AppColors.borderColor, width: 0.5),
       ),
       child: Row(
         children: [
@@ -976,7 +976,7 @@ class _CompletedMissionCard extends StatelessWidget {
               Text(
                 '${mission['price']} F',
                 style: GoogleFonts.outfit(
-                  color: AppColors.neonPurple,
+                  color: AppColors.primary,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
@@ -997,7 +997,7 @@ class _CompletedMissionCard extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════
-// Écran 32 — Historique + statistiques artisan
+// Écran 32 — Historique + statistiques prestataire
 // ═══════════════════════════════════════════════════════
 class _ArtisanStatsContent extends StatelessWidget {
   const _ArtisanStatsContent();
@@ -1013,7 +1013,7 @@ class _ArtisanStatsContent extends StatelessWidget {
             Text(
               'PERFORMANCES',
               style: GoogleFonts.outfit(
-                color: AppColors.neonPurple,
+                color: AppColors.primary,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
@@ -1061,7 +1061,7 @@ class _ArtisanStatsContent extends StatelessWidget {
                   Text(
                     '187 500 FCFA',
                     style: GoogleFonts.outfit(
-                      color: AppColors.neonPurple,
+                      color: AppColors.primary,
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
                     ),
@@ -1133,7 +1133,7 @@ class _ArtisanStatsContent extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.backgroundCard,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.glassBorder, width: 0.5),
+                border: Border.all(color: AppColors.borderColor, width: 0.5),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -1166,18 +1166,18 @@ class _PeriodChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColors.neonPurple.withValues(alpha: 0.12)
+            ? AppColors.primary.withValues(alpha: 0.12)
             : AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isSelected ? AppColors.neonPurple : AppColors.glassBorder,
+          color: isSelected ? AppColors.primary : AppColors.borderColor,
           width: isSelected ? 1.5 : 0.5,
         ),
       ),
       child: Text(
         label,
         style: GoogleFonts.outfit(
-          color: isSelected ? AppColors.neonPurple : AppColors.textSecondary,
+          color: isSelected ? AppColors.primary : AppColors.textSecondary,
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
@@ -1198,7 +1198,7 @@ class _StatBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.glassBorder, width: 0.5),
+        border: Border.all(color: AppColors.borderColor, width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1242,7 +1242,7 @@ class _BarChart extends StatelessWidget {
             Container(
               height: 80 * value,
               decoration: BoxDecoration(
-                gradient: AppColors.neonWarmGradient,
+                gradient: AppColors.primaryGradient,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -1262,7 +1262,7 @@ class _BarChart extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════
-// Écran Profil artisan (dans dashboard)
+// Écran Profil prestataire (dans dashboard)
 // ═══════════════════════════════════════════════════════
 class _ArtisanProfileContent extends StatelessWidget {
   const _ArtisanProfileContent();
@@ -1278,7 +1278,7 @@ class _ArtisanProfileContent extends StatelessWidget {
             Text(
               'MON PROFIL',
               style: GoogleFonts.outfit(
-                color: AppColors.neonPurple,
+                color: AppColors.primary,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
@@ -1286,7 +1286,7 @@ class _ArtisanProfileContent extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Artisan',
+              'Prestataire',
               style: GoogleFonts.outfit(
                 color: AppColors.textPrimary,
                 fontSize: 28,
@@ -1305,13 +1305,13 @@ class _ArtisanProfileContent extends StatelessWidget {
                     height: 80,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: AppColors.neonBlueGradient,
+                      gradient: AppColors.primaryGradient,
                     ),
                     child: Center(
                       child: Text(
                         'S',
                         style: GoogleFonts.outfit(
-                          color: AppColors.textOnNeon,
+                          color: AppColors.textOnPrimary,
                           fontSize: 36,
                           fontWeight: FontWeight.w900,
                         ),
@@ -1330,7 +1330,7 @@ class _ArtisanProfileContent extends StatelessWidget {
                   Text(
                     'PLOMBIER',
                     style: GoogleFonts.outfit(
-                      color: AppColors.neonPurple,
+                      color: AppColors.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 2,
@@ -1342,7 +1342,7 @@ class _ArtisanProfileContent extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.star_rounded,
-                        color: AppColors.neonPurple,
+                        color: AppColors.primary,
                         size: 18,
                       ),
                       Text(
@@ -1472,14 +1472,14 @@ class _SettingsItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: AppColors.glassBorder, width: 0.5),
+            bottom: BorderSide(color: AppColors.borderColor, width: 0.5),
           ),
         ),
         child: Row(
           children: [
             Icon(
               icon,
-              color: accent ? AppColors.neonPurple : AppColors.textSecondary,
+              color: accent ? AppColors.primary : AppColors.textSecondary,
               size: 22,
             ),
             const SizedBox(width: 16),
@@ -1487,7 +1487,7 @@ class _SettingsItem extends StatelessWidget {
               child: Text(
                 label,
                 style: GoogleFonts.inter(
-                  color: accent ? AppColors.neonPurple : AppColors.textPrimary,
+                  color: accent ? AppColors.primary : AppColors.textPrimary,
                   fontSize: 15,
                   fontWeight: accent ? FontWeight.w600 : FontWeight.w400,
                 ),
@@ -1555,11 +1555,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: AppColors.neonBlueGradient,
+                      gradient: AppColors.primaryGradient,
                     ),
                     child: const Icon(
                       Icons.verified_rounded,
-                      color: AppColors.textOnNeon,
+                      color: AppColors.textOnPrimary,
                       size: 24,
                     ),
                   ),
@@ -1571,7 +1571,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         Text(
                           'PLAN PRO ACTUEL',
                           style: GoogleFonts.outfit(
-                            color: AppColors.neonPurple,
+                            color: AppColors.primary,
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1.5,
@@ -1694,7 +1694,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             ),
             const SizedBox(height: 28),
 
-            GoldButton(
+            PrimaryButton(
               label: 'PAYER MAINTENANT',
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -1746,11 +1746,11 @@ class _PlanCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.neonPurple.withValues(alpha: 0.05)
+              ? AppColors.primary.withValues(alpha: 0.05)
               : AppColors.backgroundCard,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.neonPurple : AppColors.glassBorder,
+            color: isSelected ? AppColors.primary : AppColors.borderColor,
             width: isSelected ? 2 : 0.5,
           ),
         ),
@@ -1763,7 +1763,7 @@ class _PlanCard extends StatelessWidget {
                   name,
                   style: GoogleFonts.outfit(
                     color: isSelected
-                        ? AppColors.neonPurple
+                        ? AppColors.primary
                         : AppColors.textPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
@@ -1778,13 +1778,13 @@ class _PlanCard extends StatelessWidget {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      gradient: AppColors.neonWarmGradient,
+                      gradient: AppColors.primaryGradient,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
                       'POPULAIRE',
                       style: GoogleFonts.outfit(
-                        color: AppColors.textOnNeon,
+                        color: AppColors.textOnPrimary,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1,
@@ -1818,7 +1818,7 @@ class _PlanCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.check_rounded,
-                      color: AppColors.neonPurple,
+                      color: AppColors.primary,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -1856,11 +1856,11 @@ class _PaymentMethod extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColors.neonPurple.withValues(alpha: 0.08)
+            ? AppColors.primary.withValues(alpha: 0.08)
             : AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? AppColors.neonPurple : AppColors.glassBorder,
+          color: isSelected ? AppColors.primary : AppColors.borderColor,
           width: isSelected ? 1.5 : 0.5,
         ),
       ),
@@ -1872,7 +1872,7 @@ class _PaymentMethod extends StatelessWidget {
           Text(
             label,
             style: GoogleFonts.outfit(
-              color: isSelected ? AppColors.neonPurple : AppColors.textSecondary,
+              color: isSelected ? AppColors.primary : AppColors.textSecondary,
               fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
@@ -1891,27 +1891,27 @@ class FaqSupportScreen extends StatelessWidget {
 
   static const List<Map<String, String>> _faqs = [
     {
-      'q': 'Comment fonctionne Barra de Babi ?',
+      'q': 'Comment fonctionne Bara de Babi ?',
       'a':
-          'Vous décrivez votre problème, notre algorithme trouve l\'artisan vérifié le plus proche, et il arrive chez vous.',
+          'Vous décrivez votre problème, notre algorithme trouve l\'prestataire vérifié le plus proche, et il arrive chez vous.',
     },
     {
-      'q': 'Comment devenir artisan ?',
+      'q': 'Comment devenir prestataire ?',
       'a':
           'Inscrivez-vous, uploadez votre carte d\'identité et sélectionnez votre spécialité. Après validation KYC (24-48h), vous pourrez recevoir des missions.',
     },
     {
       'q': 'Quels sont les modes de paiement ?',
       'a':
-          'Les artisans paient leur abonnement via Wave CI ou Orange Money. Le paiement client-artisan se fait directement.',
+          'Les prestataires paient leur abonnement via Wave CI ou Orange Money. Le paiement client-prestataire se fait directement.',
     },
     {
       'q': 'Comment annuler une mission ?',
       'a':
-          'Vous pouvez annuler une mission en cours depuis l\'écran de suivi. Des frais peuvent s\'appliquer si l\'artisan est déjà en route.',
+          'Vous pouvez annuler une mission en cours depuis l\'écran de suivi. Des frais peuvent s\'appliquer si l\'prestataire est déjà en route.',
     },
     {
-      'q': 'Mon compte artisan est suspendu, que faire ?',
+      'q': 'Mon compte prestataire est suspendu, que faire ?',
       'a':
           'Votre compte est suspendu si votre abonnement a expiré. Renouvelez-le depuis la section Abonnement pour réactiver votre compte.',
     },
@@ -1979,7 +1979,7 @@ class FaqSupportScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  GoldButton(
+                  PrimaryButton(
                     label: 'ENVOYER',
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -2027,13 +2027,13 @@ class _FaqItemState extends State<_FaqItem> {
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: _isExpanded
-              ? AppColors.neonPurple.withValues(alpha: 0.05)
+              ? AppColors.primary.withValues(alpha: 0.05)
               : AppColors.backgroundCard,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: _isExpanded
-                ? AppColors.neonPurple.withValues(alpha: 0.3)
-                : AppColors.glassBorder,
+                ? AppColors.primary.withValues(alpha: 0.3)
+                : AppColors.borderColor,
             width: 0.5,
           ),
         ),
@@ -2047,7 +2047,7 @@ class _FaqItemState extends State<_FaqItem> {
                     widget.question,
                     style: GoogleFonts.outfit(
                       color: _isExpanded
-                          ? AppColors.neonPurple
+                          ? AppColors.primary
                           : AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

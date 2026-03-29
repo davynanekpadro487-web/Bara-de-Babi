@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 import '../widgets/buttons.dart';
 import 'kyc_screens.dart';
 
@@ -75,13 +76,8 @@ class _AuthScreenState extends State<AuthScreen>
     Future.delayed(const Duration(milliseconds: 800), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 600),
-            pageBuilder: (_, __, ___) =>
-                ProfileCreationScreen(role: _selectedRole),
-            transitionsBuilder: (_, animation, __, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+          MaterialPageRoute(
+            builder: (_) => ProfileCreationScreen(role: _selectedRole),
           ),
         );
       }
@@ -105,48 +101,12 @@ class _AuthScreenState extends State<AuthScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      backgroundColor: Colors.transparent,
+      body: PremiumBackground(
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: Stack(
             children: [
-              // Background gradient circles (Warm accents)
-              Positioned(
-                top: -100,
-                right: -100,
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        AppColors.neonPurple.withValues(alpha: 0.2),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: -80,
-                left: -80,
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        AppColors.neonOrange.withValues(alpha: 0.15),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
               // Content
               SafeArea(
                 child: LayoutBuilder(
@@ -170,10 +130,10 @@ class _AuthScreenState extends State<AuthScreen>
                                   height: 70,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    gradient: AppColors.neonBlueGradient,
+                                    gradient: AppColors.primaryGradient,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.neonBlue.withValues(
+                                        color: AppColors.primary.withValues(
                                           alpha: 0.2,
                                         ),
                                         blurRadius: 30,
@@ -209,7 +169,7 @@ class _AuthScreenState extends State<AuthScreen>
                                 width: 40,
                                 height: 3,
                                 decoration: BoxDecoration(
-                                  gradient: AppColors.neonWarmGradient,
+                                  gradient: AppColors.primaryGradient,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -258,8 +218,7 @@ class _AuthScreenState extends State<AuthScreen>
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               border: Border.all(
-                                                color: AppColors
-                                                    .backgroundTertiary,
+                                                color: AppColors.backgroundSecondary,
                                               ),
                                             ),
                                             child: Text(
@@ -319,7 +278,7 @@ class _AuthScreenState extends State<AuthScreen>
                                           ),
                                           const SizedBox(width: 12),
                                           _RoleChip(
-                                            label: 'ARTISAN',
+                                            label: 'PRESTATAIRE',
                                             icon: Icons.handyman_outlined,
                                             isSelected:
                                                 _selectedRole == 'artisan',
@@ -372,12 +331,12 @@ class _AuthScreenState extends State<AuthScreen>
                                           child: Text(
                                             'Renvoyer le code',
                                             style: GoogleFonts.inter(
-                                              color: AppColors.neonBlue,
+                                              color: AppColors.primary,
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500,
                                               decoration:
                                                   TextDecoration.underline,
-                                              decorationColor: AppColors.neonBlue,
+                                              decorationColor: AppColors.primary,
                                             ),
                                           ),
                                         ),
@@ -389,7 +348,7 @@ class _AuthScreenState extends State<AuthScreen>
                               const SizedBox(height: 32),
 
                               // CTA
-                              GoldButton(
+                              PrimaryButton(
                                 label: _isOtpSent
                                     ? 'VÉRIFIER'
                                     : 'ENVOYER LE CODE',
@@ -454,11 +413,11 @@ class _RoleChip extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColors.neonBlue.withValues(alpha: 0.1)
+                ? AppColors.primary.withValues(alpha: 0.1)
                 : AppColors.backgroundSecondary,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: isSelected ? AppColors.neonBlue : AppColors.backgroundTertiary,
+              color: isSelected ? AppColors.primary : AppColors.backgroundSecondary,
               width: isSelected ? 1.5 : 1,
             ),
           ),
@@ -468,13 +427,13 @@ class _RoleChip extends StatelessWidget {
               Icon(
                 icon,
                 size: 18,
-                color: isSelected ? AppColors.neonBlue : AppColors.textTertiary,
+                color: isSelected ? AppColors.primary : AppColors.textTertiary,
               ),
               const SizedBox(width: 8),
               Text(
                 label,
                 style: GoogleFonts.outfit(
-                  color: isSelected ? AppColors.neonBlue : AppColors.textSecondary,
+                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../core/colors.dart';
 import '../widgets/glass_container.dart';
 import '../widgets/buttons.dart';
+import '../widgets/premium_background.dart';
 
 /// Profile Screen — User profile + settings with Warm Theme
 class ProfileScreen extends StatelessWidget {
@@ -10,233 +11,232 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
-      child: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'MON PROFIL',
-                style: GoogleFonts.outfit(
-                  color: AppColors.neonBlue,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 4,
-                ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'MON PROFIL',
+              style: GoogleFonts.outfit(
+                color: AppColors.primary,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 2,
               ),
-              const SizedBox(height: 6),
-              Text(
-                'Paramètres',
-                style: GoogleFonts.outfit(
-                  color: AppColors.textPrimary,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w900,
-                ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Paramètres',
+              style: GoogleFonts.outfit(
+                color: AppColors.textPrimary,
+                fontSize: 34,
+                fontWeight: FontWeight.w900,
+                height: 1.1,
               ),
-              const SizedBox(height: 32),
+            ),
+            const SizedBox(height: 32),
 
-              // Profile card
-              GlassContainer(
-                padding: const EdgeInsets.all(24),
-                borderRadius: 24,
-                borderColor: AppColors.backgroundTertiary,
-                gradient: const LinearGradient(
-                  colors: [Colors.white, Color(0xFFFCFAF7)],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 75,
-                      height: 75,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: AppColors.neonBlueGradient,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'K',
-                          style: GoogleFonts.outfit(
-                            color: Colors.white,
-                            fontSize: 34,
-                            fontWeight: FontWeight.w900,
-                          ),
+            // Profile card
+            GlassContainer(
+              padding: const EdgeInsets.all(24),
+              borderRadius: 32,
+              child: Row(
+                children: [
+                  Container(
+                    width: 75,
+                    height: 75,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: AppColors.primaryGradient,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'K',
+                        style: GoogleFonts.outfit(
+                          color: Colors.white,
+                          fontSize: 34,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Konan Kouamé',
-                            style: GoogleFonts.outfit(
-                              color: AppColors.textPrimary,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '+225 07 12 34 56 78',
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.neonBlue.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              'CLIENT PREMIUM',
-                              style: GoogleFonts.outfit(
-                                color: AppColors.neonBlue,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.edit_note_rounded, color: AppColors.neonBlue),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Missions stats
-              Text(
-                'STATISTIQUES',
-                style: GoogleFonts.outfit(
-                  color: AppColors.textTertiary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  const Expanded(
-                    child: _MiniStat(
-                      value: '12',
-                      label: 'Missions',
-                      icon: Icons.work_outline_rounded,
-                    ),
                   ),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: _MiniStat(
-                      value: '5',
-                      label: 'Favoris',
-                      icon: Icons.favorite_outline_rounded,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 20),
                   Expanded(
-                    child: _MiniStat(
-                      value: '4.9',
-                      label: 'Note',
-                      icon: Icons.star_outline_rounded,
-                      color: AppColors.neonBlue,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Konan Kouamé',
+                          style: GoogleFonts.outfit(
+                            color: AppColors.textPrimary,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '+225 07 12 34 56 78',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textSecondary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'CLIENT PREMIUM',
+                            style: GoogleFonts.outfit(
+                              color: AppColors.primary,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit_note_rounded, color: AppColors.primary, size: 28),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+            ),
+            const SizedBox(height: 32),
 
-              // Settings sections
-              Text(
-                'MENU',
-                style: GoogleFonts.outfit(
-                  color: AppColors.textTertiary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2,
-                ),
+            // Missions stats
+            Text(
+              'STATISTIQUES',
+              style: GoogleFonts.outfit(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 2,
               ),
-              const SizedBox(height: 16),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.backgroundTertiary),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                const Expanded(
+                  child: _MiniStat(
+                    value: '12',
+                    label: 'Missions',
+                    icon: Icons.work_outline_rounded,
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    _SettingsItem(
-                      icon: Icons.history_rounded,
-                      label: 'Historique des missions',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const _MissionHistoryScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    _SettingsItem(
-                      icon: Icons.swap_horiz_rounded,
-                      label: 'Devenir Artisan',
-                      onTap: () {},
-                      accent: true,
-                    ),
-                    _SettingsItem(
-                      icon: Icons.notifications_none_rounded,
-                      label: 'Notifications',
-                      onTap: () {},
-                    ),
-                    _SettingsItem(
-                      icon: Icons.security_rounded,
-                      label: 'Sécurité',
-                      onTap: () {},
-                    ),
-                    _SettingsItem(
-                      icon: Icons.help_outline_rounded,
-                      label: 'Centre d\'aide',
-                      onTap: () {},
-                    ),
-                    _SettingsItem(
-                      icon: Icons.info_outline_rounded,
-                      label: 'À propos',
-                      trailing: 'v2.1.0',
-                      onTap: () {},
-                      isLast: true,
-                    ),
-                  ],
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: _MiniStat(
+                    value: '5',
+                    label: 'Favoris',
+                    icon: Icons.favorite_outline_rounded,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: _MiniStat(
+                    value: '4.9',
+                    label: 'Note',
+                    icon: Icons.star_outline_rounded,
+                    color: Color(0xFFFFB800),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
 
-              // Logout
-              GhostButton(
-                label: 'Déconnexion',
-                icon: Icons.logout_rounded,
-                isFullWidth: true,
-                textColor: AppColors.error,
-                borderColor: AppColors.error.withValues(alpha: 0.2),
-                onPressed: () {},
+            // Menu sections
+            Text(
+              'MENU',
+              style: GoogleFonts.outfit(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 2,
               ),
-              const SizedBox(height: 40),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+            GlassContainer(
+              padding: EdgeInsets.zero,
+              borderRadius: 32,
+              child: Column(
+                children: [
+                  _SettingsItem(
+                    icon: Icons.history_rounded,
+                    label: 'Historique des missions',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const _MissionHistoryScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  _SettingsItem(
+                    icon: Icons.swap_horiz_rounded,
+                    label: 'Devenir Prestataire',
+                    onTap: () {},
+                    accent: true,
+                  ),
+                  _SettingsItem(
+                    icon: Icons.notifications_none_rounded,
+                    label: 'Notifications',
+                    onTap: () {},
+                  ),
+                  _SettingsItem(
+                    icon: Icons.security_rounded,
+                    label: 'Sécurité',
+                    onTap: () {},
+                  ),
+                  _SettingsItem(
+                    icon: Icons.help_outline_rounded,
+                    label: 'Centre d\'aide',
+                    onTap: () {},
+                  ),
+                  _SettingsItem(
+                    icon: Icons.info_outline_rounded,
+                    label: 'À propos',
+                    trailing: 'v2.1.0',
+                    onTap: () {},
+                    isLast: true,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Logout
+            GhostButton(
+              label: 'Déconnexion',
+              icon: Icons.logout_rounded,
+              isFullWidth: true,
+              textColor: AppColors.error,
+              borderColor: AppColors.error.withValues(alpha: 0.2),
+              onPressed: () {},
+            ),
+            const SizedBox(height: 100), // Bottom nav space
+          ],
         ),
       ),
     );
@@ -263,11 +263,11 @@ class _MiniStat extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.backgroundTertiary),
+        border: Border.all(color: AppColors.backgroundSecondary),
       ),
       child: Column(
         children: [
-          Icon(icon, color: color ?? AppColors.neonBlue, size: 22),
+          Icon(icon, color: color ?? AppColors.primary, size: 22),
           const SizedBox(height: 10),
           Text(
             value,
@@ -318,7 +318,7 @@ class _SettingsItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         decoration: BoxDecoration(
           border: isLast ? null : Border(
-            bottom: BorderSide(color: AppColors.backgroundTertiary, width: 0.8),
+            bottom: BorderSide(color: AppColors.backgroundSecondary, width: 0.8),
           ),
         ),
         child: Row(
@@ -326,12 +326,12 @@ class _SettingsItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: accent ? AppColors.neonBlue.withValues(alpha: 0.1) : AppColors.backgroundSecondary,
+                color: accent ? AppColors.primary.withValues(alpha: 0.1) : AppColors.backgroundSecondary,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 icon,
-                color: accent ? AppColors.neonBlue : AppColors.textSecondary,
+                color: accent ? AppColors.primary : AppColors.textSecondary,
                 size: 20,
               ),
             ),
@@ -340,7 +340,7 @@ class _SettingsItem extends StatelessWidget {
               child: Text(
                 label,
                 style: GoogleFonts.inter(
-                  color: accent ? AppColors.neonBlue : AppColors.textPrimary,
+                  color: accent ? AppColors.primary : AppColors.textPrimary,
                   fontSize: 15,
                   fontWeight: accent ? FontWeight.w700 : FontWeight.w500,
                 ),
@@ -419,29 +419,16 @@ class _MissionHistoryScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
+      body: PremiumBackground(
         child: ListView.builder(
           padding: const EdgeInsets.all(24),
           itemCount: _missions.length,
           itemBuilder: (context, index) {
             final m = _missions[index];
             final isCancelled = m['status'] == 'Annulée';
-            return Container(
+            return GlassContainer(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.backgroundTertiary),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.02),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -451,7 +438,7 @@ class _MissionHistoryScreen extends StatelessWidget {
                       Text(
                         (m['service'] as String).toUpperCase(),
                         style: GoogleFonts.outfit(
-                          color: AppColors.neonBlue,
+                          color: AppColors.primary,
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.5,

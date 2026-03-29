@@ -4,6 +4,7 @@ import '../core/colors.dart';
 import '../core/constants.dart';
 import '../widgets/buttons.dart';
 import '../widgets/glass_container.dart';
+import '../widgets/premium_background.dart';
 
 /// Service Request Screen — Express Request Pipeline with Warm Theme
 class ServiceRequestScreen extends StatefulWidget {
@@ -80,7 +81,10 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
@@ -100,11 +104,13 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.neonWarmGradient),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: _buildStep(),
+      extendBodyBehindAppBar: true,
+      body: PremiumBackground(
+        child: SafeArea(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: _buildStep(),
+          ),
         ),
       ),
     );
@@ -136,7 +142,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           Text(
             'ÉTAPE 1 SUR 3',
             style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
+              color: AppColors.primary,
               fontSize: 11,
               fontWeight: FontWeight.w800,
               letterSpacing: 3,
@@ -167,20 +173,9 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
               final cat = AppConstants.serviceCategories[index];
               return GestureDetector(
                 onTap: () => _selectCategory(cat['id'] as String),
-                child: Container(
+                child: GlassContainer(
                   padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.backgroundTertiary),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
+                  borderRadius: 24,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,7 +235,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           Text(
             'ÉTAPE 2 SUR 3',
             style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
+              color: AppColors.primary,
               fontSize: 11,
               fontWeight: FontWeight.w800,
               letterSpacing: 3,
@@ -260,7 +255,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           Text(
             '${cat['icon']} ${cat['name']}',
             style: GoogleFonts.outfit(
-              color: AppColors.neonBlue,
+              color: AppColors.primary,
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
@@ -271,21 +266,10 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
               padding: const EdgeInsets.only(bottom: 14),
               child: GestureDetector(
                 onTap: () => _selectSubProblem(problem),
-                child: Container(
+                child: GlassContainer(
                   width: double.infinity,
                   padding: const EdgeInsets.all(22),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.backgroundTertiary),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
+                  borderRadius: 20,
                   child: Row(
                     children: [
                       Container(
@@ -293,7 +277,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                         height: 10,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.neonBlue,
+                          color: AppColors.primary,
                         ),
                       ),
                       const SizedBox(width: 18),
@@ -341,8 +325,8 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
                     colors: [
-                      AppColors.neonBlue.withValues(alpha: 0.2),
-                      AppColors.neonBlue.withValues(alpha: 0.05),
+                      AppColors.primary.withValues(alpha: 0.2),
+                      AppColors.primary.withValues(alpha: 0.05),
                       Colors.transparent,
                     ],
                   ),
@@ -353,10 +337,10 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                     height: 90,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: AppColors.neonBlueGradient,
+                      gradient: AppColors.primaryGradient,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.neonBlue.withValues(alpha: 0.3),
+                          color: AppColors.primary.withValues(alpha: 0.3),
                           blurRadius: 35,
                         ),
                       ],
@@ -385,7 +369,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           ),
           const SizedBox(height: 16),
           Text(
-            'Nous sélectionnons le meilleur artisan\nprès de vous...',
+            'Nous sélectionnons le meilleur prestataire\nprès de vous...',
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               color: AppColors.textSecondary,
@@ -403,12 +387,12 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.backgroundTertiary),
+                  border: Border.all(color: AppColors.backgroundSecondary),
                 ),
                 child: Text(
                   'Rayon : 3 km',
                   style: GoogleFonts.outfit(
-                    color: AppColors.neonBlue,
+                    color: AppColors.primary,
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
                   ),
@@ -420,7 +404,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.backgroundTertiary),
+                  border: Border.all(color: AppColors.backgroundSecondary),
                 ),
                 child: Text(
                   '4 Disponibles',
@@ -458,7 +442,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           ),
           const SizedBox(height: 24),
           Text(
-            'ARTISAN TROUVÉ !',
+            'PRESTATAIRE TROUVÉ !',
             style: GoogleFonts.outfit(
               color: AppColors.textPrimary,
               fontSize: 28,
@@ -471,7 +455,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           GlassContainer(
             padding: const EdgeInsets.all(24),
             borderRadius: 24,
-            borderColor: AppColors.backgroundTertiary,
+            borderColor: AppColors.backgroundSecondary,
             gradient: const LinearGradient(colors: [Colors.white, Color(0xFFFCFAF7)]),
             child: Column(
               children: [
@@ -480,7 +464,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                   height: 75,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: AppColors.neonBlueGradient,
+                    gradient: AppColors.primaryGradient,
                   ),
                   child: Center(
                     child: Text(
@@ -504,9 +488,9 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  (_currentCategory?['name'] as String? ?? 'ARTISAN').toUpperCase(),
+                  (_currentCategory?['name'] as String? ?? 'PRESTATAIRE').toUpperCase(),
                   style: GoogleFonts.outfit(
-                    color: AppColors.neonBlue,
+                    color: AppColors.primary,
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 2,
@@ -516,7 +500,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.star_rounded, color: AppColors.neonBlue, size: 20),
+                    const Icon(Icons.star_rounded, color: AppColors.primary, size: 20),
                     const SizedBox(width: 6),
                     Text(
                       '4.8',
@@ -555,14 +539,10 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           ),
           const SizedBox(height: 24),
 
-          Container(
+          GlassContainer(
             width: double.infinity,
             padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.backgroundTertiary),
-            ),
+            borderRadius: 24,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -591,14 +571,14 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen>
           ),
           const SizedBox(height: 32),
 
-          GoldButton(
+          PrimaryButton(
             label: 'CONFIRMER L\'INTERVENTION',
             isFullWidth: true,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'Artisan prévenu ! Il arrive.',
+                    'Prestataire prévenu ! Il arrive.',
                     style: GoogleFonts.inter(fontWeight: FontWeight.w600),
                   ),
                   backgroundColor: AppColors.success,
