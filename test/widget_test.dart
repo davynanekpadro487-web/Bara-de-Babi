@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // This is a basic Flutter widget test.
 //
 // To perform an interaction with a widget in your test, use the WidgetTester
@@ -26,5 +27,15 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+=======
+import 'package:flutter_test/flutter_test.dart';
+import 'package:bara_2_babi/main.dart';
+
+void main() {
+  testWidgets('App launches successfully', (WidgetTester tester) async {
+    await tester.pumpWidget(const BaraDeBabiApp());
+    // Verify the splash screen is shown
+    expect(find.text('BARRA DE BABI'), findsOneWidget);
+>>>>>>> 75fc9922d75a8d1b774714443b10c26292692c2e
   });
 }
