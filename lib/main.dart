@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/theme.dart';
 import 'screens/splash_screen.dart';
+import 'onboarding_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +25,12 @@ class BaraDeBabiApp extends StatelessWidget {
     return MaterialApp(
       title: 'Barra de Babi',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      home: const SplashScreen(),
+      theme: AppTheme.darkTheme, // Ou AppTheme.lightTheme selon le besoin
+      
+      // J'ai mis l'OnboardingScreen en page d'accueil pour que vous puissiez voir  
+      // immédiatement les résultats de notre travail. Si vous voulez repasser par 
+      // le SplashScreen de votre nouveau code, remplacez simplement par : const SplashScreen()
+      home: const OnboardingScreen(),
     );
   }
 }

@@ -1,4 +1,4 @@
-name: bara_2_babi
+name: flutter_application_1
 description: "Barra de Babi - Plateforme Artisans-Clients Abidjan"
 publish_to: 'none'
 
@@ -23,10 +23,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
-
   assets:
+    - assets/image/
+    - assets/image2.png
     - lib/assets/
